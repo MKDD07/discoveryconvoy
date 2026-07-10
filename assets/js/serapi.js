@@ -26,9 +26,11 @@ const SerpAPI = (() => {
    * Core SerpAPI fetch via proxy (if set) or direct endpoint.
    * @param {Object} params  - SerpAPI query parameters
    */
-    async function fetchSerp(params) {
-      const query = new URLSearchParams(params);
-      const res = await fetch(`/api/serp?${query}`);
+const WORKER_URL = 'https://discoveryconvoy.mkmkataria07.workers.dev';
+
+async function fetchSerp(params) {
+  const query = new URLSearchParams(params);
+  const res = await fetch(`${WORKER_URL}/api/serp?${query}`);
       if (!res.ok) throw new Error(`SerpAPI error ${res.status}: ${res.statusText}`);
       return res.json();
     }
