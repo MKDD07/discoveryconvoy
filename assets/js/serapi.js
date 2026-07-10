@@ -16,7 +16,6 @@
 
 const SerpAPI = (() => {
   // ── CONFIG ─────────────────────────────────────────────────────────────────
-  const SERP_API_KEY   = '7f83c49c4ab7a773e871e42237fd4775f124a8abb77e148899d0bbad6d307d69';   // 🔑 Replace with your key
   const SERP_BASE_URL  = 'https://serpapi.com/search.json';
   // If you run a backend proxy, point this to your server route:
   const PROXY_URL      = null; // e.g. 'https://yourserver.com/api/serp'
@@ -27,19 +26,12 @@ const SerpAPI = (() => {
    * Core SerpAPI fetch via proxy (if set) or direct endpoint.
    * @param {Object} params  - SerpAPI query parameters
    */
-  async function fetchSerp(params) {
-    const query = new URLSearchParams({ ...params, api_key: SERP_API_KEY });
-    let url = `${SERP_BASE_URL}?${query}`;
-    if (!PROXY_URL) {
-      url = `https://corsproxy.io/?` + encodeURIComponent(url);
-    } else {
-      url = `${PROXY_URL}?${query}`;
+    async function fetchSerp(params) {
+      const query = new URLSearchParams(params);
+      const res = await fetch(`/api/serp?${query}`);
+      if (!res.ok) throw new Error(`SerpAPI error ${res.status}: ${res.statusText}`);
+      return res.json();
     }
-
-    const res = await fetch(url);
-    if (!res.ok) throw new Error(`SerpAPI error ${res.status}: ${res.statusText}`);
-    return res.json();
-  }
 
   // ── SECTION: HOME ──────────────────────────────────────────────────────────
   /**
