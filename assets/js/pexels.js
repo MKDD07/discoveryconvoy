@@ -83,8 +83,9 @@
 
 const PexelsLoader = (() => {
   // ── CONFIG ─────────────────────────────────────────────────────────────
-    const PHOTO_BASE = '/api/pexels/v1';
-    const VIDEO_BASE = '/api/pexels/videos';
+  let PEXELS_API_KEY = 'y6WP5reQNH7abdL2uzdLTyV8pq0kMmF3CHf7ZNkiHo98DXIvORUOBSfi'; // 🔑 replace with your key
+  const PHOTO_BASE = 'https://api.pexels.com/v1';
+  const VIDEO_BASE = 'https://api.pexels.com/videos';
 
   const cache = new Map();      // dedupes identical in-flight/completed requests
   let observer = null;          // shared IntersectionObserver for lazy loading
@@ -97,8 +98,9 @@ const PexelsLoader = (() => {
       if (v !== undefined && v !== null && v !== '') url.searchParams.set(k, v);
     });
 
-    const res = await fetch(url.toString());
-
+    const res = await fetch(url.toString(), {
+      headers: { Authorization: PEXELS_API_KEY }
+    });
     if (!res.ok) throw new Error(`Pexels API error ${res.status}: ${res.statusText}`);
     return res.json();
   }
