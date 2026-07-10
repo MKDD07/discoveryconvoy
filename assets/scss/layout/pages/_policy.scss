@@ -1,0 +1,44 @@
+@use '../../utils' as *;
+
+/*----------------------------------------*/
+/*  7.23 policy
+/*----------------------------------------*/
+
+.#{$theme-prifix}-policy{
+    &-title{
+        font-size: 24px;
+    }
+    &-list{
+        li{
+            font-weight: 400;
+            font-size: 16px;
+            line-height: 163%;
+            color: var(--tp-grey-1);
+            list-style: none;
+            position: relative;
+            padding-left: 15px;
+            &:not(:last-child){
+                margin-bottom: 8px;
+            }
+            &::before{
+                content: "";
+                position: absolute;
+                left: 0;
+                top: 10px;
+                width: 4px;
+                height: 4px;
+                background-color: var(--tp-grey-1);
+                border-radius: 50%;
+            }
+        }
+        & a{
+            font-weight: 400;
+            font-size: 16px;
+            line-height: 163%;
+            color: var(--tp-grey-1);
+            &:hover{
+                color: var(--tp-theme-1);
+            }
+        }
+    }
+}

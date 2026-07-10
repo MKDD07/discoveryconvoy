@@ -1,0 +1,18 @@
+# 1. Ignore everything by default
+/*
+!/.gitignore
+
+# 2. Allow your specific files
+/index-6.html
+
+# 3. Allow your JS folder and its contents
+/assets/js/
+
+# 4. Allow your CSS folder, but only for main.css
+/assets/css/
+!/assets/css/*
+/assets/css/*
+!/assets/css/main.css
+
+# 5. Allow the assets folder generally (needed to support the subfolders)
+!/assets/

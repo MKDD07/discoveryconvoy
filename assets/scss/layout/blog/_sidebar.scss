@@ -1,0 +1,93 @@
+@use '../../utils' as *;
+/*----------------------------------------*/
+/*  5.4 Sidebar css
+/*----------------------------------------*/
+
+
+.sidebar{
+    &-search{
+        &-input{
+            & input {
+                font-weight: 400;
+                font-size: 16px;
+                color: var(--tp-grey-1);
+                border: none;
+                border-bottom: 1px solid transparent;
+                box-shadow: 0 1px 0 0 rgba(32, 33, 36, 0.14);
+                padding: 22px 30px 23px 0;
+                &:focus {
+                    border-color: var(--tp-theme-1);
+                }
+                @include placeholder {
+                    font-weight: 400;
+                    font-size: 16px;
+                    color: var(--tp-grey-1);
+                }
+            }
+            & button{
+                position: absolute;
+                top: 0;
+                right: 0;
+                height: 100%;
+                color: var(--tp-common-black);
+                &:hover{
+                    color: var(--tp-theme-1);
+                }
+            }
+        }
+    }
+    &-widget{
+        &-title{
+            font-weight: 600;
+            font-size: 24px;
+            color: var(--tp-common-black);
+        }
+        &-category{
+            & ul{
+                & li{
+                    list-style: none;
+                    &:not(:last-child){
+                        margin-bottom: 6px;
+                    }
+                    & a{
+                        border-radius: 14px;
+                        padding: 12px 20px;
+                        font-weight: 500;
+                        font-size: 16px;
+                        line-height: 1;
+                        display: inline-block;
+                        letter-spacing: -0.01em;
+                        color: rgba(0, 0, 0, 0.8);
+                        background: #F6F6F9;
+                        &:hover{
+                            color: var(--tp-theme-1);
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+.tagcloud{
+    & a{
+        padding: 9px 18px;
+        font-weight: 400;
+        font-size: 13px;
+        line-height: 1;
+        text-align: center;
+        margin-bottom: 7px;
+        border: 1px solid rgba(17, 17, 17, 0.1);
+        display: inline-block;
+        text-transform: capitalize;
+        color: #5f556a;
+        border-radius: 50px;
+        &:not(:last-child){
+            margin-right: 3px;
+        }
+        &:hover{
+            color: var(--tp-common-white);
+            background-color: var(--tp-theme-1);
+        }
+    }
+}
