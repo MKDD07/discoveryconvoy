@@ -1,0 +1,270 @@
+@use '../../utils' as *;
+
+/*----------------------------------------*/
+/*  7.17 filter Style
+/*----------------------------------------*/
+
+.#{$theme-prifix}-filter{
+    &-top{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        cursor: pointer;
+    }
+    &-title{
+        font-weight: 500;
+        font-size: 18px;
+        color: var(--tp-common-black);
+        margin-bottom: 0;
+        transition: all .4s ease;
+    }
+    &-sidebar{
+        padding: 43px 28px 45px 28px;
+        border: 1px solid rgba(7, 21, 22, 0.1);
+        border-radius: 16px;
+        box-shadow: 0 9px 20px 0 rgba(0, 0, 0, 0.03);
+    }
+    &-item{
+        &:not(:last-child){
+            border-bottom: 1px solid rgba(7, 21, 22, 0.1);
+            padding-bottom: 35px;
+            margin-bottom: 35px;
+        }
+    }
+    &-icon{
+        transform: rotate(180deg);
+        transition: all .4s ease;
+    }
+    &-checkbox{
+        & ul {
+            & li{
+                list-style: none;
+                &:not(:last-child){
+                    margin-bottom: 6px;
+                }
+                & input{
+                    display: none;
+                    &:checked{
+                        & ~ label{
+                            &::after{
+                                background-color: var(--tp-theme-1);
+                                border-color: var(--tp-theme-1);
+                            }
+                            &::before{
+                                visibility: visible;
+                                opacity: 1;
+                            }
+                        }
+                    }
+                }
+                label{
+                    font-weight: 400;
+                    font-size: 16px;
+                    color: var(--tp-grey-1);
+                    position: relative;
+                    padding-left: 28px;
+                    
+                    &::after{
+                        position: absolute;
+                        content: '';
+                        top: 4px;
+                        left: 0;
+                        width: 18px;
+                        height: 18px;
+                        line-height: 13px;
+                        text-align: center;
+                        z-index: -1;
+                        @include transition(all, .2s);
+                        border: 1px solid rgba(7, 21, 22, 0.1);
+                        border-radius: 4px;
+                        background: #f7f9f9;
+                    }
+                    &::before{
+                        position: absolute;
+                        content: url('../img/tour/check.svg');
+                        top: 5px;
+                        left: 0;
+                        width: 18px;
+                        height: 18px;
+                        line-height: 13px;
+                        text-align: center;
+                        visibility: hidden;
+                        opacity: 0;
+                        color: var(--tp-common-white);
+                        @include transition(all, .2s);
+                    }
+
+                    &:hover{
+                        cursor: pointer;
+                    }
+                }
+            }
+        }
+    }
+    &-showmore{
+        font-weight: 500;
+        font-size: 16px;
+        line-height: 100%;
+        letter-spacing: -0.04em;
+        text-decoration: underline;
+        text-decoration-skip-ink: none;
+        color: var(--tp-theme-1);
+        margin-top: 15px;
+        &:hover{
+            color: var(--tp-common-red);
+        }
+        &-2{
+            font-weight: 500;
+            font-size: 16px;
+            line-height: 100%;
+            letter-spacing: -0.04em;
+            text-decoration: underline;
+            text-decoration-skip-ink: none;
+            color: var(--tp-theme-1);
+            margin-top: 15px;
+            &:hover{
+                color: var(--tp-common-red);
+            }
+        }
+    }
+    &-search{
+        & .tp-input {
+            height: 40px;
+            border-color: rgba(7, 21, 22, 0.1);
+            background: transparent;
+            width: 100%;
+        }
+    }
+    &-collapse{
+        transition: all .4s ease;
+        &.collapsed-item{
+            margin-bottom: 0;
+            & .tp-filter-title{
+                color: var(--tp-theme-1);
+            }
+            & .tp-filter-icon{
+                transform: rotate(0deg);
+                color: var(--tp-theme-1);
+            }
+            &:has(.tp-filter-item) {
+                padding-bottom: 0;
+                margin-bottom: 0;
+            }
+        }
+    }
+    &-ratings{
+        margin-right: 8px;
+        transform: translateY(-2px);
+        & i{
+            color: var(--tp-theme-1);
+        }
+        &-wrap{
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+    }
+    &-offcanvas{
+        $self : &;
+        &-area{
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 340px;
+            height: 100%;
+            @include transform(translateX(calc(-100% - 80px)));
+            background: var(--tp-common-white) none repeat scroll 0 0;
+            @include transition-mul((all 0.3s cubic-bezier(0.785, 0.135, 0.15, 0.86)));
+            z-index: 99999;
+            overflow-y: scroll;
+            overscroll-behavior-y: contain;
+            scrollbar-width: none;
+        
+            &::-webkit-scrollbar {
+                display: none; /* for Chrome, Safari, and Opera */
+            }
+            &.offcanvas-opened{
+                @include transform(translateX(0));
+                opacity: 1;
+            }
+        
+            @media(max-width: 380px){
+                width: 100%;
+            }
+            & .tp-filter-sidebar {
+                border: none;
+                padding-top: 0;
+            }
+            
+        }
+        &-right{
+            @include transform(translateX(calc(100% + 80px)));
+            left: auto;
+            right: 0;
+        }
+        &-wrapper{
+            position: relative;
+            padding: 100px 0 0;
+            z-index: 1;
+            min-height: 100%;
+        
+        }
+        &-close{
+            &-btn{
+                background: #151515;
+                padding: 15px 30px;
+                font-size: 18px;
+                color: rgba($color: $white, $alpha: .7);
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                z-index: 1;
+        
+                &:hover{
+                    color: var(--tp-common-white);
+                }
+            }
+        }
+    }
+    &-pills{
+        display: flex;
+        flex-wrap: wrap;
+        gap: 4px;
+        margin-bottom: 32px;
+        & .tp-tour-sort .tp-select {
+            color: var(--tp-grey-1);
+            height: 40px;
+            line-height: 38px;
+            padding-right: 38px;
+            & .list{
+                min-width: 200px;
+            }
+        }
+        & .nice-select::after {
+            color: var(--tp-grey-1);
+            right: 21px;
+        }
+    }
+}
+
+.load-more-content {
+    height: 190px;
+    overflow: hidden;
+    transition: height 0.4s ease;
+}
+
+.load-more-content.active {
+    max-height: 500px;
+}
+
+.toggle-btn {
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 100%;
+    letter-spacing: -0.04em;
+    text-decoration: underline;
+    text-decoration-skip-ink: none;
+    color: var(--tp-theme-1);
+    margin-top: 15px;
+}

@@ -1,0 +1,26 @@
+// font url
+
+$font-url: 'https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Onest:wght@100..900&family=Dancing+Script:wght@400..700&family=Marcellus&display=swap" rel="stylesheet';
+
+// font family
+$font-family: (
+    'ff': (
+        'body': "'Onest', sans-serif",
+        'heading': "'Onest', sans-serif",
+        'p': "'Onest', sans-serif",
+        'inter': "'Inter', sans-serif",
+        'dancing': "'Dancing Script', cursive",
+        'marcellus': "'Marcellus', serif",
+        'fontawesome': '"Font Awesome 6 Pro"',
+    )
+);
+
+// font size
+$font-size: (
+    'fz': (
+        'body': 14px,
+        'p': 16px,
+    )
+);
+
+

@@ -1,0 +1,97 @@
+@use '../utils' as *;
+
+/*----------------------------------------*/
+/*  2.5 Buttons
+/*----------------------------------------*/
+
+.#{$theme-prifix}-btn{
+    font-size: 16px;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    color: var(--tp-common-white);
+    background: var(--tp-theme-1);
+    border-radius: 50px;
+    padding: 15px 24px;
+    display: inline-block;
+    line-height: 1;
+    transition: all .4s ease;
+    & svg{
+        margin-left: 2px;
+    }
+    &:hover{
+        background: var(--tp-common-red);
+        color: var(--tp-common-white);
+    }
+    &-black{
+        background: var(--tp-common-black);
+        color: var(--tp-common-white);
+        &:hover{
+            background: var(--tp-common-white);
+            color: var(--tp-common-black);
+        }
+        &-red{
+            background: var(--tp-common-black);
+            color: var(--tp-common-white);
+            &:hover{
+                background: var(--tp-theme-1);
+                color: var(--tp-common-white);
+            }
+        }
+    }
+    &-white{
+        background: var(--tp-common-white);
+        color: var(--tp-common-black);
+        &:hover{
+            background: var(--tp-theme-1);
+            color: var(--tp-common-white);
+        }
+        &.hover-border{
+            &:hover{
+                background: var(--tp-common-black);
+                color: var(--tp-common-white);
+            }
+        }
+    }
+    &-xl{
+        padding: 22px 24px;
+    }
+    &-xxl{
+        padding: 22px 34px;
+    }
+    &-sm{
+        font-size: 16px;
+        letter-spacing: -0.02em;
+        color: var(--tp-theme-1);
+        border: 1px solid rgba(253, 70, 33, 0.2);
+        border-radius: 39px;
+        padding: 10px 21px;
+        display: inline-block;
+        line-height: 1;
+        flex: 0 0 auto;
+        @media #{$lg}{
+            padding: 8px 17px;
+            font-size: 15px;
+        }
+        &:hover{
+            color: var(--tp-common-white);
+            background: var(--tp-common-red);
+        }
+    }
+    &-solid{
+        font-weight: 500;
+        font-size: 16px;
+        letter-spacing: -0.02em;
+        color: var(--tp-common-black);
+        &:hover{
+            color: var(--tp-theme-1);
+        }
+    }
+    &-50{
+        padding: 17px 24px;
+    }
+    &-border{
+        border: 1px solid rgba(7, 21, 22, 0.1);
+        background: transparent;
+        color: var(--tp-common-black);
+    }
+}

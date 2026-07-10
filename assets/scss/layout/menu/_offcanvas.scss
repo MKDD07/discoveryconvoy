@@ -1,0 +1,115 @@
+@use '../../utils' as *;
+
+/*----------------------------------------*/
+/*  4.4 offcanvas
+/*----------------------------------------*/
+.tp-offcanvas {
+	position: fixed;
+	right: 0;
+	z-index: 99;
+	top: 0;
+	width: 400px;
+	background: var(--tp-common-white);
+	padding: 50px 40px;
+    height: 100%;
+    overflow-y: scroll;
+    @include translateX(100%);
+    transition: all 0.3s ease-out 0s;
+    &-open{
+        @include translateX(0);
+    }
+    @media #{$xs} {
+        width: 100%;
+    } 
+    @media #{$sm} {
+        width: 400px;
+    } 
+    &-overlay{
+        position: fixed;
+        height: 100%;
+        width: 100%;
+        background: #000;
+        z-index: 15;
+        opacity: 0;
+        transition: .3s;
+        visibility: hidden;
+        &-open{
+            opacity: .4;
+            visibility: visible;
+        }
+        &.apply{
+            opacity: .4;
+            visibility: visible;
+        }
+        &.opened{
+            opacity: .4;
+            visibility: visible;
+        }
+        &:hover{
+            cursor: url(../img/cross-out.png), pointer;
+        }
+    }
+    &-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    & .tp-header-search .tp-input {
+        width: 100%;
+    }
+    &-close{
+        &-button {
+            font-size: 28px;
+            color: var(--tp-common-black);
+            &:hover{
+                color: var(--tp-theme-1);
+            }
+        }
+    }
+    &-gallery {
+        display: grid;
+        grid-gap: 10px;
+        grid-template-columns: auto auto auto auto;
+        & img{
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            @media #{$xs} {
+                width: 60px;
+                height: 60px;
+            }
+        }
+    }
+    &-title{
+        font-size: 28px;
+    }
+    &-info {
+        & span {
+            display: block;
+            margin-bottom: 4px;
+            font-size: 16px;
+            & a{
+                &:hover{
+                    color: var(--tp-theme-1);
+                }
+            }
+        }
+    }
+    &-social {
+        & a {
+            height: 44px;
+            width: 44px;
+            border: 1px solid rgba(7, 21, 22, 0.1);
+            border-radius: 100%;
+            display: inline-block;
+            text-align: center;
+            line-height: 42px;
+            margin-right: 2px;
+            color: var(--tp-common-black);
+            &:hover{
+                background: var(--tp-theme-1);
+                color: var(--tp-common-white);
+            }
+        }
+    }
+}

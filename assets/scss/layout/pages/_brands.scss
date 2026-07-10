@@ -1,0 +1,46 @@
+@use '../../utils' as *;
+
+/*----------------------------------------*/
+/*  7.4 brands
+/*----------------------------------------*/
+
+.#{$theme-prifix}-brands{
+    &-slider{
+        & .swiper-slide{
+            display: inline-block;
+            width: auto;
+            margin: 0 80px;
+            @media #{$xs}{
+                margin: 0 30px;
+            }
+            & a{
+                & img{
+                    filter: saturate(0);
+                    transition: all 0.3s ease;
+                    &:hover{
+                        filter: saturate(1);
+                    }
+                }
+            }
+        }
+    }
+    &-border{
+        border-top: 1px solid rgba(255, 255, 255, 0.2);
+        padding: 60px 0;
+        @media #{$md,$sm,$xs}{
+            padding: 30px 0;
+        }
+    }
+    &-three{
+        border-radius: 16px;
+        margin-top: -85px;
+    }
+    &-5{
+        & .tp-brands-item{
+            & img{
+                mix-blend-mode: luminosity;
+                opacity: 0.7;
+            }
+        }
+    }
+}

@@ -1,0 +1,704 @@
+@use '../../utils' as *;
+
+/*----------------------------------------*/
+/*  7.3 Booking css start
+/*----------------------------------------*/
+
+.#{$theme-prifix}-booking{
+    $self: &;
+    &-input{
+        &-icon{
+            position: absolute;
+            content: "";
+            top: 50%;
+            transform: translateY(-50%);
+            left: 30px;
+            color: var(--tp-common-black);
+            line-height: 1;
+        }
+        &-angle{
+            &-icon{
+                position: absolute;
+                top: 50%;
+                transform: translateY(-50%);
+                right: 23px;
+                color: var(--tp-common-black);
+                line-height: 1;
+            }
+        }
+    }
+    &-location{
+        width: 240px;
+        padding-right: 1px;
+        &-suggested{
+            font-size: 14px;
+            color: var(--tp-grey-1);
+            line-height: 1;
+            padding: 0 10px;
+            margin-bottom: 12px;
+            display: inline-block;
+        }
+        &-inner{
+            max-height: calc(100vh - 400px);
+            overflow-x: clip;
+            overflow-y: scroll;
+            overscroll-behavior: contain;
+            scrollbar-gutter: stable;
+            padding-right: 30px;
+            &::-webkit-scrollbar {
+                width: 5px;
+                cursor: pointer;
+            }
+            &::-webkit-scrollbar-track {
+                background: transparent;
+            }
+            &::-webkit-scrollbar-thumb {
+                background: #74747447;
+            }
+            &::-webkit-scrollbar-thumb:hover {
+                background: var(--tp-theme-1);
+            }
+        }
+        &-list{
+            width: 420px;
+            border: 1px solid #e4e4e4;
+            border-radius: 32px;
+            box-shadow: 0 10px 30px -10px rgba(20, 20, 20, 0.2);
+            background: var(--tp-common-white);
+            padding: 25px 5px 20px 22px;
+            @media #{$xs}{
+                width: 320px;
+            }
+            & ul{
+                & li{
+                    list-style: none;
+                    display: flex;
+                    padding: 7px;
+                    @include transition(all .4s ease);
+                    align-items: center;
+                    border-radius: 7px;
+                    cursor: pointer;
+                    &:hover{
+                        background: #f6f6f6;
+                    }
+                }
+            }
+        }
+        &-icon{
+            & img{
+                width: 56px;
+                height: 56px;
+                border-radius: 12px;
+                margin-right: 16px;
+            }
+        }
+        &-content{
+            & span{
+                font-weight: 500;
+                letter-spacing: -0.01em;
+                color: var(--tp-common-black);
+                font-size: 16px;
+            }
+            & p{
+                font-size: 14px;
+                color: var(--tp-grey-1);
+                line-height: 1;
+                margin-bottom: 5px;
+            }
+        }
+        &-input{
+            z-index: 2;
+            &::before{
+                position: absolute;
+                content: "";
+                width: 1px;
+                height: 31px;
+                background: rgb(240 245 250);
+                right: 0;
+                top: 50%;
+                transform: translateY(-50%);
+                @media #{$xs}{
+                    display: none;
+                }
+            }
+            &.no-border{
+                &::before{
+                    display: none;
+                }
+            }
+            &.active{
+                &::before{
+                    display: none;
+                }
+            }
+        }
+        & .tp-input{
+            font-weight: 400;
+            font-size: 16px;
+            color: var(--tp-common-black);
+            padding-left: 50px;
+            border-radius: 100px;
+            width: 100%;
+            height: 50px;
+            border: none;
+            background: transparent;
+            &:focus{
+                border: none;
+            }
+            @include placeholder{
+                color: var(--tp-grey-1);
+                font-weight: 400;
+                font-size: 16px;
+            }
+        }
+        &-label{
+            font-weight: 500;
+            font-size: 16px;
+            letter-spacing: -0.01em;
+            color: var(--tp-common-black);
+            padding-left: 24px;
+            padding-top: 15px
+        }
+    }
+    &-toggle{
+        &-active{
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            margin-top: 0;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            &.booking-open{
+                opacity: 1;
+                visibility: visible;
+                position: absolute;
+                top: 100%;
+                margin-top: 10px;
+                z-index: 999999;
+            }
+        }
+    }
+    &-quantity{
+        width: 122px;
+        border-radius: 0;
+        position: relative;
+        &-wrap{
+            width: 420px;
+            border: 1px solid #e4e4e4;
+            border-radius: 32px;
+            box-shadow: 0 10px 30px -10px rgba(20, 20, 20, 0.2);
+            background: var(--tp-common-white);
+            padding: 25px 20px 20px 22px;
+            @media #{$xs}{
+                width: 320px;
+            }
+            & ul{
+                & li{
+                    list-style: none;
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                    flex-wrap: wrap;
+                    &:not(:last-child){
+                        border-bottom: 1px solid #ebebeb;
+                        padding-bottom: 10px;
+                        margin-bottom: 10px;
+                    }
+                }
+            }
+        }
+        & .tp{
+            &-increment,
+            &-dreckment{
+                width: 24px;
+                height: 24px;
+                line-height: 23px;
+                text-align: center;
+                border-radius: 50%;
+                left: 14px;
+                top: 11px;
+                cursor: pointer;
+                position: absolute;
+                display: inline-block;
+                @include transition();
+                &:hover{
+                    background-color: var(--tp-common-black);
+                    color: var(--tp-common-white);
+                }
+            }
+            &-increment{
+                left: auto;
+                right: 14px;
+            }
+            &-input[type="text"]{
+                height: 46px;
+                line-height: 47px;
+                padding: 0 45px;
+                font-size: 16px;
+                background-color: transparent;
+                color: var(--tp-common-black);
+                border: 1px solid var(--tp-border-1);
+                border-radius: 50px;
+                text-align: center;
+                width: 122px;
+            
+            }
+        }
+        &-content{
+            margin-right: 15px;
+            & span{
+                font-weight: 600;
+                letter-spacing: -0.01em;
+                color: var(--tp-common-black);
+                font-size: 18px;
+                margin-bottom: 4px;
+                display: inline-block;
+            }
+            & p{
+                font-size: 15px;
+                color: var(--tp-grey-1);
+                line-height: 1;
+                & a{
+                    text-decoration: underline;
+                    &:hover{
+                        color: var(--tp-theme-1);
+                    }
+                }
+            }
+        }
+    }
+    &-submit{
+        &-btn{
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            right: 16px;
+            z-index: 2;
+            & button{
+                border-radius: 36px;
+                width: 50px;
+                height: 50px;
+                background: var(--tp-theme-1);
+                color: var(--tp-common-white);
+                &:hover{
+                    background: var(--tp-common-red);
+                }
+            }
+        }
+    }
+    &-wrap{
+        display: inline-flex;
+        flex-wrap: wrap;
+        background: var(--tp-common-white);
+        border-radius: 50px;
+        padding: 10px 0;
+        @media #{$md,$sm,$xs}{
+            border-radius: 20px;
+        }
+    }
+    &-col{
+        &-2{
+            width: 200px;
+            & .tp-booking-location-input::before {
+                @media #{$md,$sm,$xs}{
+                    display: none;
+                }
+            }
+        }
+        &-3{
+            width: 320px;
+            & .tp-input {
+                padding-right: 80px;
+            }
+        }
+    }
+    &-form{
+        &-border{
+            border-bottom: 1px solid rgba(7, 21, 22, 0.1);
+            padding-bottom: 40px;
+            margin-bottom: 40px;
+            width: 100%;
+            @media #{$md}{
+                width: 70%;
+            }
+            & .tp-booking-wrap {
+                border: 1px solid rgba(7, 21, 22, 0.1);
+            }
+            & .tp-booking-col-1 {
+                @media #{$xxl,$xl}{
+                    width: 200px;
+                }
+            }
+            & .tp-booking-col-2 {
+                @media #{$xxl,$xl}{
+                    width: 175px;
+                }
+            }
+            & .tp-booking-col-3 {
+                @media #{$xxl,$xl}{
+                    width: 269px;
+                }
+            }
+        }
+        &-one{
+            background: var(--tp-common-white);
+            border-radius: 18px;
+            padding: 45px 40px 50px 40px;
+            margin-left: 77px;
+            margin-right: 130px;
+            @media #{$xl,$lg,$md,$sm,$xs}{
+                margin-right: 0;
+                margin-left: 0;
+            }
+            @media #{$xs}{
+                padding: 30px 15px 30px 15px;
+            }
+            &-title{
+                font-weight: 500;
+                font-size: 20px;
+                color: var(--tp-common-black);
+            }
+            &-subtitle{
+                font-weight: 400;
+                font-size: 16px;
+                color: var(--tp-grey-1);
+            }
+            & .tp-booking-wrap {
+                display: block;
+                padding: 0;
+            }
+            & .tp-booking-location {
+                width: 100%;
+                padding-right: 0;
+            }
+            & .tp-booking-location .tp-input {
+                border: 1px solid rgba(17, 17, 17, 0.1);
+                border-radius: 50px;
+                background: transparent;
+            }
+            & .tp-booking-input-icon {
+                color: var(--tp-grey-1);
+            }
+            & .tp-btn {
+                padding: 17px 24px;
+            }
+        }
+        &-two{
+            & .tp-booking-col-2 {
+                width: 265px;
+                @media #{$xs}{
+                    width: 100%;
+                }
+            }
+            & .tp-booking-location .tp-input {
+                padding-right: 67px;
+            }
+        }
+    }
+    &-help{
+        & a{
+            color: var(--tp-common-black);
+            font-weight: 500;
+            &:hover{
+                color: var(--tp-theme-1);
+            }
+        }
+    }
+    &-package{
+        &-list{
+            & ul{
+                & li{
+                    list-style: none;
+                    &:not(:last-child){
+                        margin-bottom: 16px;
+                    }
+                    & a{
+                        border: 1px solid rgba(17, 17, 17, 0.1);
+                        border-radius: 60px;
+                        padding: 12px 40px 12px 20px;
+                        font-weight: 400;
+                        font-size: 16px;
+                        color: var(--tp-grey-1);
+                        display: block;
+                        position: relative;
+                        &:hover{
+                            background: var(--tp-theme-1);
+                            color: var(--tp-common-white);
+                            border-color: var(--tp-theme-1);
+                            & i{
+                                opacity: 1;
+                                visibility: visible;
+                                right: 24px;
+                            }
+                        }
+                        & i{
+                            width: 20px;
+                            height: 20px;
+                            display: inline-flex;
+                            justify-content: center;
+                            align-items: center;
+                            border: 1px solid var(--tp-common-white);
+                            color: var(--tp-common-white);
+                            font-size: 12px;
+                            border-radius: 100px;
+                            position: absolute;
+                            top: 50%;
+                            transform: translateY(-50%);
+                            right: 34px;
+                            opacity: 0;
+                            visibility: hidden;
+                            transition: all .3s ease;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    &-3{
+        &-sub{
+            font-weight: 500;
+            font-size: 14px;
+            letter-spacing: -0.01em;
+            color: var(--tp-common-black);
+            line-height: 1;
+            margin-top: 4px;
+            display: inline-block;
+        }
+        &-form{
+            @media #{$xxl,$xl,$lg}{
+                margin-left: -50px;
+                margin-right: -50px;
+            }
+            & .tp-booking-wrap {
+                border: 1px solid rgba(17, 17, 17, 0.08);
+                border-radius: 12px;
+                padding: 16px 0;
+                @media #{$md,$sm,$xs}{
+                    display: inline-block;
+                }
+            }
+            & .tp-booking-location-input {
+                line-height: 1;
+                padding-left: 30px;
+                @media #{$md,$sm,$xs}{
+                    margin-bottom: 15px;
+                }
+                & .tp-input {
+                    padding-left: 0;
+                    border-radius: 0px;
+                    height: 28px;
+                    line-height: 1;
+                    font-size: 14px;
+                    @include placeholder{
+                        font-size: 14px;
+                    }
+                }
+            }
+            & .tp-booking-submit-btn button {
+                width: auto;
+                height: auto;
+                font-size: 16px;
+                padding: 17px 27px;
+                border-radius: 6px;
+                @media #{$xs}{
+                    padding: 12px 27px;
+                }
+            }
+            & .tp-booking-submit-btn {
+                right: 10px;
+            }
+            & .tp-booking-col-1{
+                @media #{$md,$sm,$xs}{
+                    width: 100%;
+                }
+            }
+            & .tp-booking-col-3{
+                width: 360px;
+                @media #{$x3l,$xxl,$xl,$lg}{
+                    width: 320px;
+                }
+                @media #{$md,$sm,$xs}{
+                    width: 100%;
+                }
+                & .tp-booking-location-input{
+                    .tp-input {
+                        padding-right: 152px;
+                    }
+                }
+            }
+            & .tp-booking-location-input::before {
+                height: 18px;
+            }
+            & #lineMarker {
+                border-radius: 6px;
+            }
+        }
+    }
+    &-5{
+        &-form{
+            & .tp-booking-wrap {
+                box-shadow: 0 5px 20px 0 rgba(0, 0, 0, 0.04);
+            }
+            & .tp-booking-location {
+                @media #{$xxl,$md}{
+                    width: 175px;
+                }
+            }
+            & .tp-booking-col-3 {
+                @media #{$x3l}{
+                    width: 310px;
+                }
+                @media #{$xxl,$md,$sm,$xs}{
+                    width: 270px;
+                }
+                @media #{$sm,$xs}{
+                    width: 100%;
+                }
+            }
+            & .tp-booking-col-3 {
+                & .tp-booking-toggle-active {
+                    left: auto;
+                    right: 0;
+                }
+            }
+        }
+    }
+    &-6{
+        &-title{
+            font-size: 16px;
+            letter-spacing: -0.02em;
+            color: var(--tp-common-black);
+        }
+        &-dec{
+            font-weight: 400;
+            font-size: 16px;
+            color: var(--tp-common-black);
+            & a{
+                color: var(--tp-theme-1);
+            }
+        }
+        &-form{
+            box-shadow: 0 20px 24px 0 rgba(20, 20, 20, 0.05);
+            background: var(--tp-common-white);
+            border-radius: 16px;
+            padding: 33px 50px 30px 50px;
+            margin-top: -110px;
+            z-index: 3;
+            position: relative;
+            @media #{$xs}{
+                padding: 33px 20px 30px 20px;
+            }
+            & .tp-booking-submit-btn{
+                position: inherit;
+                transform: inherit;
+                right: auto;
+                top: auto;
+                & button {
+                    border-radius: 6px;
+                    width: 192px;
+                    height: 60px;
+                }
+            }
+            & .tp-booking-location {
+                width: 100%;
+            }
+            & .tp-booking-toggle-active {
+                @media #{$xs}{
+                    left: auto;
+                    right: 0;
+                }
+            }
+            & .tp-booking-location-input::before {
+                display: none;
+            }
+            & .tp-booking-wrap{
+                flex-wrap: nowrap;
+                gap: 16px;
+                @media #{$md,$sm,$xs}{
+                    flex-wrap: wrap;
+                }
+            }
+            & .tp-booking-location-input .tp-input {
+                height: 60px;
+                background: var(--tp-grey-3);
+                border-radius: 6px;
+            }
+            & .tp-booking-input-icon {
+                top: 48%;
+                left: 23px;
+                color: #5f556a;
+            }
+            & .tp-booking-location-input .tp-input {
+                padding-right: 20px; 
+            }
+        }
+    }
+    &-7{
+        &-form{
+            & .tp-booking-input-icon{
+                border: 1px solid rgba(17, 17, 17, 0.1);
+                border-radius: 8px;
+                width: 50px;
+                height: 50px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                left: 0;
+            }
+            & .tp-booking-location-input{
+                padding-left: 65px;
+            }
+            & .tp-booking-location-input::before {
+                display: none;
+            }
+            & .tp-booking-location {
+                width: 250px;
+                @media #{$md,$sm,$xs}{
+                    width: 100%;
+                }
+            }
+            & .tp-booking-col-3 {
+                width: 312px;
+                @media #{$md,$sm,$xs}{
+                    width: 100%;
+                }
+            }
+            & .tp-booking-submit-btn button {
+                padding: 12px 20px;
+            }
+            & .tp-booking-wrap{
+                padding-left: 15px;
+                @media #{$md,$sm,$xs}{
+                    padding-bottom: 0;
+                }
+            }
+            & .tp-booking-location-tour-type{
+                & ul{
+                    & li{
+                        padding: 7px 15px;
+                    }
+                }
+            }
+            & .tp-booking-col-3 {
+                & .tp-booking-toggle-active {
+                    @media #{$lg,$xs}{
+                        left: auto;
+                        right: 0;
+                    }
+                }
+            }
+        }
+    }
+}
+
+#lineMarker{
+    position: absolute;
+    top: 0;
+    height: 100%;
+    z-index: 1;
+    transition: .4s;
+    border-radius: 50px;
+    display: inline-block;
+    background: rgb(240 245 250);
+}

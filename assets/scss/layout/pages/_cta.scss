@@ -1,0 +1,36 @@
+@use '../../utils' as *;
+
+/*----------------------------------------*/
+/*  7.12 cta css
+/*----------------------------------------*/
+
+.tp-cta{
+    &-5{
+        background: linear-gradient(192deg, rgba(255, 219, 210, 0.8) 0%, rgba(217, 255, 253, 0.8) 100%);
+        &-dec{
+            font-size: 18px;
+            @media #{$xl,$lg,$md,$sm,$xs}{
+                & br{
+                    display: none;
+                }
+            }
+        }
+        &-app{
+            display: flex;
+            gap: 14px;
+            & img{
+                box-shadow: 0 7px 19px 0 rgba(3, 46, 65, 0.15);
+                background: var(--tp-common-white);
+                border-radius: 12px;
+            }
+        }
+        &-scaner{
+            & span{
+                font-weight: 500;
+                font-size: 16px;
+                letter-spacing: -0.05em;
+                color: var(--tp-common-black);
+            }
+        }
+    }
+}
