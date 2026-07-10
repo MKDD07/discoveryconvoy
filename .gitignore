@@ -15,4 +15,8 @@
 !/assets/css/main.css
 
 # 5. Allow the assets folder generally (needed to support the subfolders)
+<<<<<<< HEAD
 !/assets/
+=======
+!/assets/
+>>>>>>> a80c5ab19aa30254260d2c5866f65ee7f94a16c0
