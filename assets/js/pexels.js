@@ -91,8 +91,8 @@ const PexelsLoader = (() => {
   let mutObserver = null;       // watches for dynamically added elements
 
   // ── CORE FETCH ─────────────────────────────────────────────────────────
-  async function fetchPexels(base, endpoint, params = {}) {
-    const url = new URL(base + endpoint);
+async function fetchPexels(base, endpoint, params = {}) {
+    const url = new URL(base + endpoint, window.location.origin);
     Object.entries(params).forEach(([k, v]) => {
       if (v !== undefined && v !== null && v !== '') url.searchParams.set(k, v);
     });
