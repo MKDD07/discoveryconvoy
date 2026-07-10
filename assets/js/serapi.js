@@ -16,6 +16,7 @@
 
 const SerpAPI = (() => {
   // ── CONFIG ─────────────────────────────────────────────────────────────────
+  const SERP_API_KEY   = '7f83c49c4ab7a773e871e42237fd4775f124a8abb77e148899d0bbad6d307d69';   // 🔑 Replace with your key
   const SERP_BASE_URL  = 'https://serpapi.com/search.json';
   // If you run a backend proxy, point this to your server route:
   const PROXY_URL      = null; // e.g. 'https://yourserver.com/api/serp'
@@ -26,12 +27,19 @@ const SerpAPI = (() => {
    * Core SerpAPI fetch via proxy (if set) or direct endpoint.
    * @param {Object} params  - SerpAPI query parameters
    */
-    async function fetchSerp(params) {
-      const query = new URLSearchParams(params);
-      const res = await fetch(`/api/serp?${query}`);
-      if (!res.ok) throw new Error(`SerpAPI error ${res.status}: ${res.statusText}`);
-      return res.json();
+  async function fetchSerp(params) {
+    const query = new URLSearchParams({ ...params, api_key: SERP_API_KEY });
+    let url = `${SERP_BASE_URL}?${query}`;
+    if (!PROXY_URL) {
+      url = `https://corsproxy.io/?` + encodeURIComponent(url);
+    } else {
+      url = `${PROXY_URL}?${query}`;
     }
+
+    const res = await fetch(url);
+    if (!res.ok) throw new Error(`SerpAPI error ${res.status}: ${res.statusText}`);
+    return res.json();
+  }
 
   // ── SECTION: HOME ──────────────────────────────────────────────────────────
   /**
@@ -292,7 +300,7 @@ const TravelSearch = (() => {
       const durationH = Math.floor(f.duration / 60);
       const durationM = f.duration % 60;
       const stopLabel = f.stops === 0 ? 'Nonstop' : `${f.stops} stop${f.stops > 1 ? 's' : ''}`;
-      const logoHtml  = f.logo ? `<img src="${f.logo}" alt="${f.airline}" class="ts-flight-logo" style="height: 24px; margin-right: 8px; vertical-align: middle; border-radius: 4px;" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline-block';"><span class="ts-flight-airline" style="display: none;">${f.airline}</span>` : `<span class="ts-flight-airline">${f.airline}</span>`;
+      const logoHtml  = f.logo ? `<img ${imgAttrs(f.logo, '')} alt="${f.airline}" class="ts-flight-logo" onerror="this.style.display='none';">` : `<span class="ts-flight-airline">${f.airline}</span>`;
       return `
         <div class="ts-flight-card wow fadeInUp" data-wow-duration=".9s" data-wow-delay="${0.1 + i * 0.1}s">
           <div class="ts-flight-header">
@@ -545,10 +553,10 @@ const PopularPackages = (() => {
   const CARDS_PER_LOCATION = 4;
 
   const FLIGHT_ROUTES = [
-    { id: 'del-lhr', departure: 'DEL', arrival: 'LHR', cityDep: 'New Delhi', cityArr: 'London', defaultPrice: 48500, airline: 'Air India', logo: 'https://www.gstatic.com/flights/airline_logos/70px/AI.png', badge: 'Hot Deal' },
-    { id: 'bom-dxb', departure: 'BOM', arrival: 'DXB', cityDep: 'Mumbai', cityArr: 'Dubai', defaultPrice: 22400, airline: 'Emirates', logo: 'https://www.gstatic.com/flights/airline_logos/70px/EK.png', badge: 'Top Seller' },
-    { id: 'blr-sin', departure: 'BLR', arrival: 'SIN', cityDep: 'Bangalore', cityArr: 'Singapore', defaultPrice: 18900, airline: 'Singapore Air', logo: 'https://www.gstatic.com/flights/airline_logos/70px/SQ.png', badge: 'Best Rate' },
-    { id: 'del-cdg', departure: 'DEL', arrival: 'CDG', cityDep: 'New Delhi', cityArr: 'Paris', defaultPrice: 52000, airline: 'Air France', logo: 'https://www.gstatic.com/flights/airline_logos/70px/AF.png', badge: 'Recommended' }
+    { id: 'del-lhr', departure: 'DEL', arrival: 'LHR', cityDep: 'New Delhi', cityArr: 'London', defaultPrice: 48500, airline: 'Air India', badge: 'Hot Deal' },
+    { id: 'bom-dxb', departure: 'BOM', arrival: 'DXB', cityDep: 'Mumbai', cityArr: 'Dubai', defaultPrice: 22400, airline: 'Emirates', badge: 'Top Seller' },
+    { id: 'blr-sin', departure: 'BLR', arrival: 'SIN', cityDep: 'Bangalore', cityArr: 'Singapore', defaultPrice: 18900, airline: 'Singapore Air', badge: 'Best Rate' },
+    { id: 'del-cdg', departure: 'DEL', arrival: 'CDG', cityDep: 'New Delhi', cityArr: 'Paris', defaultPrice: 52000, airline: 'Air France', badge: 'Recommended' }
   ];
 
   // Default fallback image whenever a remote thumbnail fails to load or is missing
@@ -571,11 +579,6 @@ const PopularPackages = (() => {
       try {
         const parsed = JSON.parse(cached);
         if (parsed && typeof parsed.price === 'number' && !isNaN(parsed.price)) {
-          // If cached flight has no logo but the route object defines a static fallback logo, update it
-          if (!parsed.logo && route.logo) {
-            parsed.logo = route.logo;
-            localStorage.setItem(cacheKey, JSON.stringify(parsed));
-          }
           return parsed;
         }
       } catch (e) {}
@@ -600,7 +603,7 @@ const PopularPackages = (() => {
         }
         const flightResult = {
           airline: flight.airline || route.airline,
-          logo: flight.logo || route.logo || '',
+          logo: flight.logo || '',
           price: finalPrice,
           duration: flight.duration || 540,
           stops: flight.stops || 0
@@ -614,7 +617,7 @@ const PopularPackages = (() => {
 
     const fallbackResult = {
       airline: route.airline,
-      logo: route.logo || '',
+      logo: '',
       price: route.defaultPrice,
       duration: 540,
       stops: 0
@@ -867,10 +870,8 @@ const PopularPackages = (() => {
       Promise.all(flightPromises).then(results => {
         flightDealsGrid.innerHTML = results.map(({ route, flightData }) => {
           const airline = flightData.airline;
-          const logoHtml = flightData.logo ? `<img src="${flightData.logo}" alt="${airline}" style="height: 24px; margin-right: 8px; vertical-align: middle; border-radius: 4px;" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline-block';"><i class="fa-solid fa-plane mr-5" style="color: var(--tp-theme-1); display: none;"></i>` : `<i class="fa-solid fa-plane mr-5" style="color: var(--tp-theme-1);"></i>`;
+          const logoHtml = flightData.logo ? `<img ${imgAttrs(flightData.logo, '')} alt="${airline}" style="height: 24px; margin-right: 8px; vertical-align: middle; border-radius: 4px;" onerror="this.style.display='none';">` : `<i class="fa-solid fa-plane mr-5" style="color: var(--tp-theme-1);"></i>`;
           const badgeText = route.badge;
-          const badgeClassMap = { 'Hot Deal': 'badge-hot-deal', 'Top Seller': 'badge-top-seller', 'Best Rate': 'badge-best-rate', 'Recommended': 'badge-recommended' };
-          const badgeClass = badgeClassMap[badgeText] || '';
           const priceText = `₹${flightData.price.toLocaleString('en-IN')}`;
           
           const durationH = Math.floor(flightData.duration / 60);
@@ -885,7 +886,7 @@ const PopularPackages = (() => {
                         ${logoHtml}
                         ${airline}
                      </span>
-                     <span class="tp-flight-badge ${badgeClass}">${badgeText}</span>
+                     <span class="tp-flight-badge">${badgeText}</span>
                   </div>
                   <div class="tp-flight-route">
                      <div class="tp-flight-airport text-start">
