@@ -83,8 +83,9 @@
 
 const PexelsLoader = (() => {
   // ── CONFIG ─────────────────────────────────────────────────────────────
-    const PHOTO_BASE = '/api/pexels/v1';
-    const VIDEO_BASE = '/api/pexels/videos';
+const WORKER_URL = 'https://discoveryconvoy.mkmkataria07.workers.dev';
+const PHOTO_BASE = WORKER_URL + '/api/pexels/v1';
+const VIDEO_BASE = WORKER_URL + '/api/pexels/videos';
 
   const cache = new Map();      // dedupes identical in-flight/completed requests
   let observer = null;          // shared IntersectionObserver for lazy loading
