@@ -80,25 +80,34 @@
  * See example-usage.html for a full runnable example.
  * ============================================================================
  */
+/**
+ * ============================================================================
+ *  Pexels Universal Media Loader  (Photos + Videos, single script)
+ * ============================================================================
+ * See header docs in original file for full data-attribute reference.
+ * ============================================================================
+ */
 
 const PexelsLoader = (() => {
-  // ── CONFIG ─────────────────────────────────────────────────────────────
-    const PHOTO_BASE = '/api/pexels/v1';
-    const VIDEO_BASE = '/api/pexels/videos';
-
-  const cache = new Map();      // dedupes identical in-flight/completed requests
-  let observer = null;          // shared IntersectionObserver for lazy loading
-  let mutObserver = null;       // watches for dynamically added elements
+  const WORKER_URL = 'https://discoveryconvoy.mkmkataria07.workers.dev';
+  const PHOTO_BASE = `${WORKER_URL}/api/pexels/v1`;
+  const VIDEO_BASE = `${WORKER_URL}/api/pexels/videos`;
+  const cache = new Map();
+  let observer = null;
+  let mutObserver = null;
 
   // ── CORE FETCH ─────────────────────────────────────────────────────────
   async function fetchPexels(base, endpoint, params = {}) {
+    if (!base || !/^https?:\/\//.test(base)) {
+      throw new Error(`Invalid Pexels base URL: "${base}" — check WORKER_URL is defined`);
+    }
+
     const url = new URL(base + endpoint);
     Object.entries(params).forEach(([k, v]) => {
       if (v !== undefined && v !== null && v !== '') url.searchParams.set(k, v);
     });
 
     const res = await fetch(url.toString());
-
     if (!res.ok) throw new Error(`Pexels API error ${res.status}: ${res.statusText}`);
     return res.json();
   }
@@ -140,10 +149,8 @@ const PexelsLoader = (() => {
     if (!files?.length) return null;
     const rank = { uhd: 3, hd: 2, sd: 1 };
     const target = rank[quality] || 2;
-    // exact quality match, widest first
     const exact = files.filter(f => f.quality === quality).sort((a, b) => b.width - a.width);
     if (exact.length) return exact[0];
-    // else closest quality by rank distance, widest first
     const sorted = [...files].sort((a, b) => {
       const distA = Math.abs((rank[a.quality] || 0) - target);
       const distB = Math.abs((rank[b.quality] || 0) - target);
@@ -194,15 +201,14 @@ const PexelsLoader = (() => {
 
     const autoplay = flag('pexelsAutoplay', false);
     el.autoplay = autoplay;
-    el.muted = flag('pexelsMuted', autoplay); // browsers require muted for autoplay
+    el.muted = flag('pexelsMuted', autoplay);
     el.loop = flag('pexelsLoop', false);
     el.controls = flag('pexelsControls', !autoplay);
-    if (autoplay) el.setAttribute('playsinline', ''); // iOS requirement
+    if (autoplay) el.setAttribute('playsinline', '');
 
     if (autoplay) {
-      // load() ensures new src is picked up before play() on some browsers
       el.load();
-      el.play().catch(() => {}); // ignore autoplay-block errors
+      el.play().catch(() => {});
     }
   }
 
@@ -240,7 +246,7 @@ const PexelsLoader = (() => {
     }
   }
 
-  // ── LAZY LOADING (shared IntersectionObserver) ────────────────────────
+  // ── LAZY LOADING ────────────────────────────────────────────────────────
   function ensureObserver() {
     if (observer) return observer;
     observer = new IntersectionObserver((entries) => {
@@ -250,7 +256,7 @@ const PexelsLoader = (() => {
           load(entry.target);
         }
       });
-    }, { rootMargin: '200px' }); // start loading a bit before it's visible
+    }, { rootMargin: '200px' });
     return observer;
   }
 
@@ -273,7 +279,6 @@ const PexelsLoader = (() => {
     if (!target) return;
     scan(target);
 
-    // watch for elements added later (e.g. dynamic cards, infinite scroll)
     if (!mutObserver) {
       mutObserver = new MutationObserver(muts => {
         muts.forEach(m => {
@@ -288,10 +293,6 @@ const PexelsLoader = (() => {
     }
   }
 
-  function setApiKey(key) {
-    PEXELS_API_KEY = key;
-  }
-
   // ── AUTO-INIT ──────────────────────────────────────────────────────────
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', () => init());
@@ -299,8 +300,7 @@ const PexelsLoader = (() => {
     init();
   }
 
-  // ── EXPORTS ────────────────────────────────────────────────────────────
-  return { init, load, setApiKey, scan };
+  return { init, load, scan };
 })();
 
 window.PexelsLoader = PexelsLoader;
