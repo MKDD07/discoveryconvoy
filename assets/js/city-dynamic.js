@@ -158,7 +158,7 @@
           <div class="tp-tour-item" style="border-radius:16px; overflow:hidden; background:#fff; box-shadow:0 4px 20px rgba(0,0,0,0.08);">\
             <div class="tp-tour-thumb p-relative fix">\
               <a href="' + hotelDetailUrl + '" class="image">\
-                <img src="' + thumbnail + '" alt="' + (hotel.name || 'Hotel') + '" style="width:100%; height:220px; object-fit:cover;">\
+                <img src="' + thumbnail + '" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src=\'assets/img/tour/city/card/card.jpg\';" alt="' + (hotel.name || 'Hotel') + '" style="width:100%; height:220px; object-fit:cover;">\
               </a>\
             </div>\
             <div class="tp-tour-content" style="padding:20px;">\

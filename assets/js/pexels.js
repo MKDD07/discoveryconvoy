@@ -9,11 +9,14 @@
  * ----------------------------------------------------------------------------
  * SETUP
  * ----------------------------------------------------------------------------
- * 1. Get a free key: https://www.pexels.com/api/  (200 req/hr, 20,000 req/mo)
- * 2. Set PEXELS_API_KEY below.
- * 3. Drop this script anywhere; it scans the DOM automatically on load and
+ * This script talks to your Cloudflare Worker at /api/pexels/*, which
+ * proxies requests to the real Pexels API and injects your secret key
+ * server-side (set as PEXELS_API_KEY in the Worker's Variables and
+ * secrets). No key is needed or stored in this file.
+ *
+ * 1. Drop this script anywhere; it scans the DOM automatically on load and
  *    also watches for elements added later (MutationObserver).
- * 4. To trigger manually instead of relying on auto-scan:
+ * 2. To trigger manually instead of relying on auto-scan:
  *      PexelsLoader.init();               // scan whole document
  *      PexelsLoader.init('#gallery');     // scan a container
  *      PexelsLoader.load(elementRef);     // load a single element
@@ -25,7 +28,10 @@
  *  data-pexels-id              Load an exact photo/video by ID (skips search entirely)
  *  data-pexels-type            "photo" | "video"  — optional, auto-detected from tag
  *                               (<img> = photo, <video> = video) unless overridden
- *  data-pexels-index           Which result to pick from search results (0 = first). Default 0
+ *  data-pexels-index           Which result to pick from search results (0 = first).
+ *                               If omitted, a RANDOM result is picked automatically each
+ *                               page load. When multiple elements share the same query,
+ *                               duplicates are avoided until the pool is exhausted.
  *  data-pexels-orientation     "landscape" | "portrait" | "square"   (search filter)
  *  data-pexels-color           e.g. "red", "blue", "#ffffff"          (photo search filter)
  *  data-pexels-locale          e.g. "en-US"                            (search filter)
@@ -83,16 +89,21 @@
 
 const PexelsLoader = (() => {
   // ── CONFIG ─────────────────────────────────────────────────────────────
-    const PHOTO_BASE = '/api/pexels/v1';
-    const VIDEO_BASE = '/api/pexels/videos';
+  // These are relative paths handled by the Cloudflare Worker's
+  // /api/pexels/* route. If your frontend is hosted on a different
+  // domain than the Worker, change these to the Worker's full URL, e.g.
+  // 'https://discoveryconvoy.<subdomain>.workers.dev/api/pexels/v1'
+  const PHOTO_BASE = '/api/pexels/v1';
+  const VIDEO_BASE = '/api/pexels/videos';
 
-  const cache = new Map();      // dedupes identical in-flight/completed requests
-  let observer = null;          // shared IntersectionObserver for lazy loading
-  let mutObserver = null;       // watches for dynamically added elements
+  const searchCache = new Map();  // dedupes identical in-flight/completed SEARCH LIST requests
+  const usedIndices = new Map();  // listKey -> Set of indices already handed out (avoids on-page duplicates)
+  let observer = null;            // shared IntersectionObserver for lazy loading
+  let mutObserver = null;         // watches for dynamically added elements
 
   // ── CORE FETCH ─────────────────────────────────────────────────────────
   async function fetchPexels(base, endpoint, params = {}) {
-    const url = new URL(base + endpoint);
+    const url = new URL(base + endpoint, window.location.origin);
     Object.entries(params).forEach(([k, v]) => {
       if (v !== undefined && v !== null && v !== '') url.searchParams.set(k, v);
     });
@@ -103,13 +114,31 @@ const PexelsLoader = (() => {
     return res.json();
   }
 
-  function cacheKey(el) {
-    const d = el.dataset;
-    return [
-      d.pexelsType || el.tagName, d.pexelsQuery || '', d.pexelsId || '',
-      d.pexelsSize || '', d.pexelsVideoQuality || '', d.pexelsOrientation || '',
-      d.pexelsColor || '', d.pexelsLocale || '', d.pexelsIndex || '0'
-    ].join('|');
+  // Picks an index from a results list. If the element specifies an explicit
+  // data-pexels-index, that's used exactly. Otherwise a random index is
+  // chosen, avoiding indices already handed out for the same search (so
+  // multiple elements using the same query don't show the same result) —
+  // once every index has been used at least once, it resets and starts
+  // reusing them.
+  function pickIndex(listKey, length, explicitIndex) {
+    if (length <= 0) return 0;
+    if (explicitIndex !== undefined) {
+      return Math.min(Math.max(parseInt(explicitIndex, 10) || 0, 0), length - 1);
+    }
+    let used = usedIndices.get(listKey);
+    if (!used) {
+      used = new Set();
+      usedIndices.set(listKey, used);
+    }
+    if (used.size >= length) used.clear(); // pool exhausted, start reusing
+    let idx;
+    let attempts = 0;
+    do {
+      idx = Math.floor(Math.random() * length);
+      attempts++;
+    } while (used.has(idx) && attempts < length * 2);
+    used.add(idx);
+    return idx;
   }
 
   // ── PHOTO HELPERS ──────────────────────────────────────────────────────
@@ -117,11 +146,7 @@ const PexelsLoader = (() => {
     return photo?.src?.[size] || photo?.src?.original || '';
   }
 
-  async function resolvePhoto(el) {
-    const d = el.dataset;
-    if (d.pexelsId) {
-      return fetchPexels(PHOTO_BASE, `/photos/${d.pexelsId}`);
-    }
+  async function fetchPhotoList(d) {
     const data = await fetchPexels(PHOTO_BASE, '/search', {
       query: d.pexelsQuery,
       orientation: d.pexelsOrientation,
@@ -129,8 +154,31 @@ const PexelsLoader = (() => {
       locale: d.pexelsLocale,
       per_page: 15
     });
-    const idx = parseInt(d.pexelsIndex || '0', 10);
-    const photo = data.photos?.[idx];
+    return data.photos || [];
+  }
+
+  async function resolvePhoto(el) {
+    const d = el.dataset;
+    if (d.pexelsId) {
+      return fetchPexels(PHOTO_BASE, `/photos/${d.pexelsId}`);
+    }
+
+    const useCache = d.pexelsCache !== 'false';
+    const listKey = ['photo', d.pexelsQuery || '', d.pexelsOrientation || '', d.pexelsColor || '', d.pexelsLocale || ''].join('|');
+
+    let listPromise;
+    if (useCache && searchCache.has(listKey)) {
+      listPromise = searchCache.get(listKey);
+    } else {
+      listPromise = fetchPhotoList(d);
+      if (useCache) searchCache.set(listKey, listPromise);
+    }
+
+    const photos = await listPromise;
+    if (!photos.length) throw new Error(`No photo results for "${d.pexelsQuery}"`);
+
+    const idx = pickIndex(listKey, photos.length, d.pexelsIndex);
+    const photo = photos[idx];
     if (!photo) throw new Error(`No photo result for "${d.pexelsQuery}" at index ${idx}`);
     return photo;
   }
@@ -152,19 +200,38 @@ const PexelsLoader = (() => {
     return sorted[0];
   }
 
-  async function resolveVideo(el) {
-    const d = el.dataset;
-    if (d.pexelsId) {
-      return fetchPexels(VIDEO_BASE, `/videos/${d.pexelsId}`);
-    }
+  async function fetchVideoList(d) {
     const data = await fetchPexels(VIDEO_BASE, '/search', {
       query: d.pexelsQuery,
       orientation: d.pexelsOrientation,
       locale: d.pexelsLocale,
       per_page: 15
     });
-    const idx = parseInt(d.pexelsIndex || '0', 10);
-    const video = data.videos?.[idx];
+    return data.videos || [];
+  }
+
+  async function resolveVideo(el) {
+    const d = el.dataset;
+    if (d.pexelsId) {
+      return fetchPexels(VIDEO_BASE, `/videos/${d.pexelsId}`);
+    }
+
+    const useCache = d.pexelsCache !== 'false';
+    const listKey = ['video', d.pexelsQuery || '', d.pexelsOrientation || '', d.pexelsLocale || ''].join('|');
+
+    let listPromise;
+    if (useCache && searchCache.has(listKey)) {
+      listPromise = searchCache.get(listKey);
+    } else {
+      listPromise = fetchVideoList(d);
+      if (useCache) searchCache.set(listKey, listPromise);
+    }
+
+    const videos = await listPromise;
+    if (!videos.length) throw new Error(`No video results for "${d.pexelsQuery}"`);
+
+    const idx = pickIndex(listKey, videos.length, d.pexelsIndex);
+    const video = videos[idx];
     if (!video) throw new Error(`No video result for "${d.pexelsQuery}" at index ${idx}`);
     return video;
   }
@@ -212,19 +279,13 @@ const PexelsLoader = (() => {
 
     const isVideo = (el.dataset.pexelsType || el.tagName.toLowerCase()) === 'video'
       || el.tagName === 'VIDEO';
-    const useCache = el.dataset.pexelsCache !== 'false';
-    const key = cacheKey(el);
 
     try {
-      let dataPromise;
-      if (useCache && cache.has(key)) {
-        dataPromise = cache.get(key);
-      } else {
-        dataPromise = isVideo ? resolveVideo(el) : resolvePhoto(el);
-        if (useCache) cache.set(key, dataPromise);
-      }
-
-      const data = await dataPromise;
+      // Note: caching happens at the search-results-list level inside
+      // resolvePhoto/resolveVideo (see searchCache), not here — this keeps
+      // network calls deduped while still letting each element get its own
+      // randomly (or explicitly) picked item from the shared list.
+      const data = isVideo ? await resolveVideo(el) : await resolvePhoto(el);
       isVideo ? applyVideo(el, data) : applyPhoto(el, data);
 
       el.dataset.pexelsLoaded = 'true';
@@ -232,7 +293,6 @@ const PexelsLoader = (() => {
         detail: { element: el, type: isVideo ? 'video' : 'photo', data }
       }));
     } catch (err) {
-      if (useCache) cache.delete(key);
       const fallback = el.dataset.pexelsFallback;
       if (fallback) el.src = fallback;
       el.dispatchEvent(new CustomEvent('pexels:error', { detail: { element: el, error: err } }));
@@ -288,10 +348,6 @@ const PexelsLoader = (() => {
     }
   }
 
-  function setApiKey(key) {
-    PEXELS_API_KEY = key;
-  }
-
   // ── AUTO-INIT ──────────────────────────────────────────────────────────
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', () => init());
@@ -300,7 +356,7 @@ const PexelsLoader = (() => {
   }
 
   // ── EXPORTS ────────────────────────────────────────────────────────────
-  return { init, load, setApiKey, scan };
+  return { init, load, scan };
 })();
 
 window.PexelsLoader = PexelsLoader;

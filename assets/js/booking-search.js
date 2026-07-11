@@ -490,7 +490,7 @@
 
   function renderOrganicItem(item, iconClass = 'fa-suitcase') {
     const imgHtml = item.thumbnail
-      ? `<img src="${item.thumbnail}" alt="${item.title}" style="width: 40px; height: 40px; object-fit: cover; border-radius: 6px;">`
+      ? `<img src="${item.thumbnail}" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='assets/img/booking-form/02.png';" alt="${item.title}" style="width: 40px; height: 40px; object-fit: cover; border-radius: 6px;">`
       : `<div style="display:flex; align-items:center; justify-content:center; width:40px; height:40px; background:#f0f7ff; border-radius:6px; color:#007bff;"><i class="fas ${iconClass}"></i></div>`;
 
     return `
@@ -558,7 +558,7 @@
       if (labelEl) labelEl.textContent = `Top Hotels in ${query}`;
       listUl.innerHTML = hotels.map(hotel => {
         const imgHtml = hotel.thumbnail
-          ? `<img src="${hotel.thumbnail}" alt="${hotel.name}" style="width: 40px; height: 40px; object-fit: cover; border-radius: 6px;">`
+          ? `<img src="${hotel.thumbnail}" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='assets/img/booking-form/02.png';" alt="${hotel.name}" style="width: 40px; height: 40px; object-fit: cover; border-radius: 6px;">`
           : `<div style="display:flex; align-items:center; justify-content:center; width:40px; height:40px; background:#f0f7ff; border-radius:6px; color:#007bff;"><i class="fas fa-hotel"></i></div>`;
 
         const priceText = hotel.price !== 'N/A' ? `${formatINR(hotel.price)} / night` : 'Price on request';
