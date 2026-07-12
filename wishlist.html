@@ -1,0 +1,951 @@
+<!doctype html>
+<html class="no-js" lang="zxx">
+
+<head>
+   <meta charset="utf-8">
+   <meta http-equiv="x-ua-compatible" content="ie=edge">
+   <title>Turie – Travel & Tour Booking HTML Template</title>
+   <meta name="description" content="">
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+
+   <!-- Place favicon.ico in the root directory -->
+   <link rel="shortcut icon" type="image/x-icon" href="assets/img/logo/favicon.png">
+
+   <!-- CSS here -->
+   <link rel="stylesheet" href="assets/css/bootstrap.css">
+   <link rel="stylesheet" href="assets/css/swiper-bundle.css">
+   <link rel="stylesheet" href="assets/css/magnific-popup.css">
+   <link rel="stylesheet" href="assets/css/font-awesome-pro.css">
+   <link rel="stylesheet" href="assets/css/daterangepicker.css">
+   <link rel="stylesheet" href="assets/css/range-slider.css">
+   <link rel="stylesheet" href="assets/css/spacing.css">
+   <link rel="stylesheet" href="assets/css/main.css">
+</head>
+
+<body>
+   <!--[if lte IE 9]>
+      <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
+      <![endif]-->
+
+   <!-- preloader-here start -->
+   <div id="loading">
+      <div class="loader">
+         <div class="plane">
+            <img src="assets/img/preloader/fly.png" class="plane-img">
+         </div>
+         <div class="earth-wrapper">
+            <div class="earth"></div>
+         </div>  
+      </div>
+   </div>
+   <!-- preloader-here end -->
+
+   <!-- back to top start -->
+   <div class="back-to-top-wrapper">
+      <button id="back_to_top" type="button" class="back-to-top-btn">
+         <svg width="12" height="7" viewBox="0 0 12 7" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M11 6L6 1L1 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+         </svg>
+      </button>
+   </div>
+   <!-- back to top end -->
+
+   <!-- tp-offcanvas start -->
+   <div class="tp-offcanvas">
+      <div class="tp-offcanvas-header mb-30">
+         <div class="tp-offcanvas-logo">
+            <a href="index.html"><img data-width="108" src="assets/img/logo/logo.png" alt=""></a>
+         </div>
+         <div class="tp-offcanvas-close">
+            <button class="tp-offcanvas-close-button"><i class="fal fa-times"></i></button>
+         </div>
+      </div>
+      <div class="tp-header-search p-relative mb-30">
+         <form action="#">
+            <input class="tp-input" type="text" placeholder="Search for Thailand">
+            <button class="tp-header-search-btn" type="submit">
+               <svg width="13" height="13" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M5.64267 10.7857C8.48288 10.7857 10.7853 8.48318 10.7853 5.64286C10.7853 2.80254 8.48288 0.5 5.64267 0.5C2.80245 0.5 0.5 2.80254 0.5 5.64286C0.5 8.48318 2.80245 10.7857 5.64267 10.7857Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" />
+                  <path d="M12.5 12.5L9.92871 9.92857" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" />
+               </svg>
+            </button>
+         </form>
+      </div>
+      <div class="tp-offcanvas-menu mb-50">
+         <nav> 
+         </nav>
+      </div>
+      <div class="tp-offcanvas-content mb-40">
+         <h3 class="tp-offcanvas-title"> Hello There!</h3>
+         <p>Lorem ipsum dolor sit amet, consect etur adipiscing elit. </p>
+      </div>
+      <div class="tp-offcanvas-gallery mb-50">
+         <a class="popup-image" href="assets/img/tour/01.jpg"><img src="assets/img/tour/01.jpg" alt="tour"></a>
+         <a class="popup-image" href="assets/img/tour/02.jpg"><img src="assets/img/tour/02.jpg" alt="tour"></a>
+         <a class="popup-image" href="assets/img/tour/03.jpg"><img src="assets/img/tour/03.jpg" alt="tour"></a>
+         <a class="popup-image" href="assets/img/tour/04.jpg"><img src="assets/img/tour/04.jpg" alt="tour"></a>
+      </div>
+      <div class="tp-offcanvas-info mb-50">
+         <h3 class="tp-offcanvas-title">Information</h3>
+         <span><a href="#">+ 4 20 7700 1007</a></span>
+         <span><a href="#">hello@turie.com</a></span>
+         <span><a href="#">Avenue de Roma 158b, Lisboa</a></span>
+      </div>
+      <div class="tp-offcanvas-social">
+         <h3 class="tp-offcanvas-title"> Follow Us</h3>
+         <a href="#">
+            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="18" viewBox="0 0 12 18" fill="none">
+               <path fill-rule="evenodd" clip-rule="evenodd" d="M1.62839 7.77713C0.911363 7.77713 0.761719 7.91782 0.761719 8.59194V9.81416C0.761719 10.4883 0.911363 10.629 1.62839 10.629H3.36172V15.5179C3.36172 16.192 3.51136 16.3327 4.22839 16.3327H5.96172C6.67874 16.3327 6.82839 16.192 6.82839 15.5179V10.629H8.77466C9.31846 10.629 9.45859 10.5296 9.60798 10.038L9.97941 8.81579C10.2353 7.97368 10.0776 7.77713 9.14609 7.77713H6.82839V5.74009C6.82839 5.29008 7.21641 4.92527 7.69505 4.92527H10.1617C10.8787 4.92527 11.0284 4.78458 11.0284 4.11046V2.48083C11.0284 1.80671 10.8787 1.66602 10.1617 1.66602H7.69505C5.30182 1.66602 3.36172 3.49004 3.36172 5.74009V7.77713H1.62839Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"></path>
+            </svg>
+         </a>
+         <a href="#">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="14" viewBox="0 0 16 14" fill="none">
+               <path fill-rule="evenodd" clip-rule="evenodd" d="M5.28884 0.714844H0.666992L6.14691 7.9153L1.01754 13.9556H3.38746L7.26697 9.38713L10.7118 13.9136H15.3337L9.69453 6.50391L9.70451 6.51669L14.5599 0.798959H12.19L8.58427 5.04503L5.28884 0.714844ZM3.21817 1.97588H4.65702L12.7825 12.6525H11.3436L3.21817 1.97588Z" fill="currentColor"></path>
+            </svg>
+         </a>
+         <a href="#">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+               <circle cx="9.99991" cy="9.99991" r="8.38077" stroke="currentColor" stroke-width="1.5"></circle>
+               <path d="M18.3799 11.0604C17.6032 10.9148 16.8043 10.8389 15.9891 10.8389C11.5034 10.8389 7.51372 13.1373 4.9707 16.7054" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"></path>
+               <path d="M15.8665 4.13281C13.2437 7.2064 9.30255 9.16128 4.8957 9.16128C3.76828 9.16128 2.67133 9.03332 1.61914 8.79143" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"></path>
+               <path d="M12.1938 18.3815C12.4039 17.3641 12.5142 16.3104 12.5142 15.2309C12.5142 9.93756 9.86111 5.26259 5.80957 2.45801" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"></path>
+            </svg>
+         </a>
+         <a href="#">
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+               <path d="M1.66602 8.99935C1.66602 5.54238 1.66602 3.8139 2.73996 2.73996C3.8139 1.66602 5.54238 1.66602 8.99935 1.66602C12.4563 1.66602 14.1848 1.66602 15.2587 2.73996C16.3327 3.8139 16.3327 5.54238 16.3327 8.99935C16.3327 12.4563 16.3327 14.1848 15.2587 15.2587C14.1848 16.3327 12.4563 16.3327 8.99935 16.3327C5.54238 16.3327 3.8139 16.3327 2.73996 15.2587C1.66602 14.1848 1.66602 12.4563 1.66602 8.99935Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"></path>
+               <path d="M12.4747 9.00103C12.4747 10.9195 10.9195 12.4747 9.00103 12.4747C7.08256 12.4747 5.52734 10.9195 5.52734 9.00103C5.52734 7.08256 7.08256 5.52734 9.00103 5.52734C10.9195 5.52734 12.4747 7.08256 12.4747 9.00103Z" stroke="currentColor" stroke-width="1.5"></path>
+               <path d="M13.251 4.75391L13.242 4.75391" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+            </svg>
+         </a>
+      </div>
+   </div>
+   <div class="tp-offcanvas-overlay"></div>
+   <!-- tp-offcanvas end -->
+
+   <!-- cart mini area start -->
+   <div class="cartmini__area">
+      <div class="cartmini__wrapper d-flex justify-content-between flex-column">
+         <div class="cartmini__top-wrapper">
+            <div class="cartmini__top p-relative">
+               <div class="cartmini__top-title">
+                  <h4>Shopping cart</h4>
+               </div>
+               <div class="cartmini__close">
+                  <button type="button" class="cartmini__close-btn cartmini-close-btn"><i class="fal fa-times"></i></button>
+               </div>
+            </div>
+            <div class="cartmini__shipping">
+               <p> Free Shipping for all orders over <span>$50</span></p>
+               <div class="progress">
+                  <div class="progress-bar progress-bar-striped progress-bar-animated bg-warning" role="progressbar" data-width="70%" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
+               </div>
+            </div>
+            <div class="cartmini__widget">
+               <div class="cartmini__widget-item">
+                  <div class="cartmini__thumb">
+                     <a href="shop-details.html">
+                        <img src="assets/img/product/small/shop-thumb-1.png" alt="">
+                     </a>
+                  </div>
+                  <div class="cartmini__content">
+                     <h5 class="cartmini__title"><a href="shop-details.html">Woven Chair</a></h5>
+                     <div class="cartmini__price-wrapper">
+                        <span class="cartmini__price">$120.00</span>
+                        <span class="cartmini__quantity">x2</span>
+                     </div>
+                  </div>
+                  <a href="#" class="cartmini__del"><i class="fa-regular fa-xmark"></i></a>
+               </div>
+               <div class="cartmini__widget-item">
+                  <div class="cartmini__thumb">
+                     <a href="shop-details.html">
+                        <img src="assets/img/product/small/shop-thumb-2.png" alt="">
+                     </a>
+                  </div>
+                  <div class="cartmini__content">
+                     <h5 class="cartmini__title"><a href="shop-details.html">Paxous Chair</a></h5>
+                     <div class="cartmini__price-wrapper">
+                        <span class="cartmini__price">$120.00</span>
+                        <span class="cartmini__quantity">x2</span>
+                     </div>
+                  </div>
+                  <a href="#" class="cartmini__del"><i class="fa-regular fa-xmark"></i></a>
+               </div>
+               <div class="cartmini__widget-item">
+                  <div class="cartmini__thumb">
+                     <a href="shop-details.html">
+                        <img src="assets/img/product/small/shop-thumb-3.png" alt="">
+                     </a>
+                  </div>
+                  <div class="cartmini__content">
+                     <h5 class="cartmini__title"><a href="shop-details.html">Plush White Chair</a></h5>
+                     <div class="cartmini__price-wrapper">
+                        <span class="cartmini__price">$120.00</span>
+                        <span class="cartmini__quantity">x2</span>
+                     </div>
+                  </div>
+                  <a href="#" class="cartmini__del"><i class="fa-regular fa-xmark"></i></a>
+               </div>
+            </div>
+            <!-- for wp -->
+         </div>
+         <div class="cartmini__checkout">
+            <div class="cartmini__checkout-title mb-30">
+               <h4>Subtotal:</h4>
+               <span>$113.00</span>
+            </div>
+            <div class="cartmini__checkout-btn">
+               <a href="cart.html" class="tp-btn w-100 mb-10 text-center"> View Cart</a>
+               <a href="checkout.html" class="tp-btn tp-btn-black-red w-100 text-center"> Checkout</a>
+            </div>
+         </div>
+      </div>
+   </div>
+   <!-- cart mini area end -->
+
+      <header class="tp-header-height">
+
+      <!-- header-area-start -->
+      <div id="header-sticky" class="tp-header-blur tp-header-area tp-header-lg-ptb">
+         <div class="container">
+            <div class="row align-items-center">
+               <div class="col-xl-7 col-6">
+                  <div class="tp-header-left d-flex align-items-center">
+                     <div class="tp-header-logo mr-60">
+                        <a href="index.html">
+                           <img width="115" src="assets/img/logo/logo.png" alt="">
+                        </a>
+                     </div>
+                     <div class="tp-main-menu tp-menu-dropdown d-none d-xl-block">
+                        <nav class="tp-mobile-menu-active">
+                           <ul>
+                              <li class="has-dropdown">
+                                 <a href="index.html">Home</a>
+                                 <ul class="sub-menu">
+                                    <li><a href="index.html">Home 01</a></li>
+                                    <li><a href="index-2.html">Home 02</a></li>
+                                    <li><a href="index-3.html">Home 03</a></li>
+                                    <li><a href="index-4.html">Home 04</a></li>
+                                    <li><a href="index-5.html">Home 05</a></li>
+                                    <li><a href="index-6.html">Home 06</a></li>
+                                    <li><a href="index-7.html">Home 07</a></li>
+                                 </ul>
+                              </li>
+                              <li class="has-dropdown">
+                                 <a href="city-details-2.html">Detonations</a>
+                                 <div class="sub-menu tp-megamenu-wrapper">
+                                    <div class="row">
+                                       <div class="col-xl-4">
+                                          <div class="tp-megamenu-list">
+                                             <ul>
+                                                <li>
+                                                   <a href="city-details-2.html" class="d-flex align-items-center gap-2">
+                                                      <div class="tp-megamenu-list-thumb">
+                                                         <img src="assets/img/menu/01.png" alt="des">
+                                                      </div>
+                                                      <div class="tp-megamenu-list-content">
+                                                         <span class="tp-megamenu-list-subtitle">Things to do in</span>
+                                                         <span class="tp-megamenu-list-title">Osaka</span>
+                                                      </div>
+                                                   </a>
+                                                </li>
+                                                <li>
+                                                   <a href="city-details-3.html" class="d-flex align-items-center gap-2">
+                                                      <div class="tp-megamenu-list-thumb">
+                                                         <img src="assets/img/menu/02.png" alt="des">
+                                                      </div>
+                                                      <div class="tp-megamenu-list-content">
+                                                         <span class="tp-megamenu-list-subtitle">Things to do in</span>
+                                                         <span class="tp-megamenu-list-title">Sapporo</span>
+                                                      </div>
+                                                   </a>
+                                                </li>
+                                                <li>
+                                                   <a href="city-details-4.html" class="d-flex align-items-center gap-2">
+                                                      <div class="tp-megamenu-list-thumb">
+                                                         <img src="assets/img/menu/03.png" alt="des">
+                                                      </div>
+                                                      <div class="tp-megamenu-list-content">
+                                                         <span class="tp-megamenu-list-subtitle">Things to do in</span>
+                                                         <span class="tp-megamenu-list-title">Narita</span>
+                                                      </div>
+                                                   </a>
+                                                </li>
+                                                <li>
+                                                   <a href="city-details-2.html" class="d-flex align-items-center gap-2">
+                                                      <div class="tp-megamenu-list-thumb">
+                                                         <img src="assets/img/menu/04.png" alt="des">
+                                                      </div>
+                                                      <div class="tp-megamenu-list-content">
+                                                         <span class="tp-megamenu-list-subtitle">Things to do in</span>
+                                                         <span class="tp-megamenu-list-title">Los Angeles</span>
+                                                      </div>
+                                                   </a>
+                                                </li>
+                                             </ul>
+                                          </div>
+                                       </div>
+                                       <div class="col-xl-4">
+                                          <div class="tp-megamenu-list">
+                                             <ul>
+                                                <li>
+                                                   <a href="city-details-3.html" class="d-flex align-items-center gap-2">
+                                                      <div class="tp-megamenu-list-thumb">
+                                                         <img src="assets/img/menu/05.png" alt="des">
+                                                      </div>
+                                                      <div class="tp-megamenu-list-content">
+                                                         <span class="tp-megamenu-list-subtitle">Things to do in</span>
+                                                         <span class="tp-megamenu-list-title">Greece</span>
+                                                      </div>
+                                                   </a>
+                                                </li>
+                                                <li>
+                                                   <a href="city-details-4.html" class="d-flex align-items-center gap-2">
+                                                      <div class="tp-megamenu-list-thumb">
+                                                         <img src="assets/img/menu/06.png" alt="des">
+                                                      </div>
+                                                      <div class="tp-megamenu-list-content">
+                                                         <span class="tp-megamenu-list-subtitle">Things to do in</span>
+                                                         <span class="tp-megamenu-list-title">Turkey</span>
+                                                      </div>
+                                                   </a>
+                                                </li>
+                                                <li>
+                                                   <a href="city-details-2.html" class="d-flex align-items-center gap-2">
+                                                      <div class="tp-megamenu-list-thumb">
+                                                         <img src="assets/img/destination/six/thumb.jpg" alt="des">
+                                                      </div>
+                                                      <div class="tp-megamenu-list-content">
+                                                         <span class="tp-megamenu-list-subtitle">Things to do in</span>
+                                                         <span class="tp-megamenu-list-title">Maldives</span>
+                                                      </div>
+                                                   </a>
+                                                </li>
+                                                <li>
+                                                   <a href="city-details-3.html" class="d-flex align-items-center gap-2">
+                                                      <div class="tp-megamenu-list-thumb">
+                                                         <img src="assets/img/destination/six/thumb-2.jpg" alt="des">
+                                                      </div>
+                                                      <div class="tp-megamenu-list-content">
+                                                         <span class="tp-megamenu-list-subtitle">Things to do in</span>
+                                                         <span class="tp-megamenu-list-title">Canada</span>
+                                                      </div>
+                                                   </a>
+                                                </li>
+                                             </ul>
+                                          </div>
+                                       </div>
+                                       <div class="col-xl-4">
+                                          <div class="tp-megamenu-list">
+                                             <ul>
+                                                <li>
+                                                   <a href="city-details-4.html" class="d-flex align-items-center gap-2">
+                                                      <div class="tp-megamenu-list-thumb">
+                                                         <img src="assets/img/destination/six/thumb-3.jpg" alt="des">
+                                                      </div>
+                                                      <div class="tp-megamenu-list-content">
+                                                         <span class="tp-megamenu-list-subtitle">Things to do in</span>
+                                                         <span class="tp-megamenu-list-title">Indonesia</span>
+                                                      </div>
+                                                   </a>
+                                                </li>
+                                                <li>
+                                                   <a href="city-details-2.html" class="d-flex align-items-center gap-2">
+                                                      <div class="tp-megamenu-list-thumb">
+                                                         <img src="assets/img/destination/six/thumb-4.jpg" alt="des">
+                                                      </div>
+                                                      <div class="tp-megamenu-list-content">
+                                                         <span class="tp-megamenu-list-subtitle">Things to do in</span>
+                                                         <span class="tp-megamenu-list-title">Australia</span>
+                                                      </div>
+                                                   </a>
+                                                </li>
+                                                <li>
+                                                   <a href="city-details-3.html" class="d-flex align-items-center gap-2">
+                                                      <div class="tp-megamenu-list-thumb">
+                                                         <img src="assets/img/destination/six/thumb-5.jpg" alt="des">
+                                                      </div>
+                                                      <div class="tp-megamenu-list-content">
+                                                         <span class="tp-megamenu-list-subtitle">Things to do in</span>
+                                                         <span class="tp-megamenu-list-title">Switzerland</span>
+                                                      </div>
+                                                   </a>
+                                                </li>
+                                                <li>
+                                                   <a href="city-details-4.html" class="d-flex align-items-center gap-2">
+                                                      <div class="tp-megamenu-list-thumb">
+                                                         <img src="assets/img/destination/six/thumb-6.jpg" alt="des">
+                                                      </div>
+                                                      <div class="tp-megamenu-list-content">
+                                                         <span class="tp-megamenu-list-subtitle">Things to do in</span>
+                                                         <span class="tp-megamenu-list-title">Thailand</span>
+                                                      </div>
+                                                   </a>
+                                                </li>
+                                             </ul>
+                                          </div>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </li>
+                              <li class="has-dropdown">
+                                 <a href="tour-grid.html">Tour Listing</a>
+                                 <ul class="sub-menu">
+                                    <li><a href="tour-grid.html">Tour Grid</a></li>
+                                    <li><a href="tour-grid-sidebar.html">Tour Grid Sidebar</a></li>
+                                    <li><a href="tour-grid-map.html">Tour Grid Map</a></li>
+                                    <li><a href="tour-list-map.html">Tour List Map</a></li>
+                                    <li><a href="tour-list-left-sidebar.html">Tour List Left Sidebar</a></li>
+                                    <li><a href="tour-list-right-sidebar.html">Tour List Right Sidebar</a></li>
+                                    <li><a href="tour-details.html">Tour Details 01</a></li>
+                                    <li><a href="tour-details-2.html">Tour Details 02</a></li>
+                                    <li><a href="tour-details-3.html">Tour Details 03</a></li>
+                                    <li><a href="tour-details-4.html">Tour Details 04</a></li>
+                                    <li><a href="tour-details-5.html">Tour Details 05</a></li>
+                                    <li><a href="tour-details-6.html">Tour Details 06</a></li>
+                                    <li><a href="tour-details-7.html">Tour Details 07</a></li>
+                                 </ul>
+                              </li>
+                              <li class="has-dropdown">
+                                 <a href="blog.html">Blog</a>
+                                 <ul class="sub-menu">
+                                    <li><a href="blog.html">Blog</a></li>
+                                    <li><a href="blog-list.html">Blog List</a></li>
+                                    <li><a href="blog-standard.html">Blog Standard</a></li>
+                                    <li><a href="blog-details.html">Blog Details</a></li>
+                                    <li><a href="blog-details-2.html">Blog Details 2</a></li>
+                                 </ul>
+                              </li>
+                              <li class="has-dropdown active">
+                                 <a href="#">Page</a>
+                                 <ul class="sub-menu">
+                                    <li><a href="about.html">About</a></li>
+                                    <li><a href="career.html">Career</a></li>
+                                    <li><a href="career-details.html">Career Details</a></li>
+                                    <li class="menu-item-has-children active">
+                                       <a href="shop.html">Shop</a>
+                                       <ul class="sub-menu">
+                                          <li><a href="shop.html">Shop</a></li>
+                                          <li><a href="shop-details.html">Shop Details</a></li>
+                                          <li><a href="cart.html">Cart</a></li>
+                                          <li><a href="checkout.html">Checkout</a></li>
+                                          <li class="active"><a href="wishlist.html">wishlist</a></li>
+                                       </ul>
+                                    </li>
+                                    <li class="menu-item-has-children">
+                                       <a href="city-details.html">Destination</a>
+                                       <ul class="sub-menu">
+                                          <li><a href="city-details.html">City Details 01</a></li>
+                                          <li><a href="city-details-2.html">City Details 02</a></li>
+                                          <li><a href="city-details-3.html">City Details 03</a></li>
+                                          <li><a href="city-details-4.html">City Details 04</a></li>
+                                       </ul>
+                                    </li>
+                                    <li class="menu-item-has-children">
+                                       <a href="tour-guide.html">Tour Guide</a>
+                                       <ul class="sub-menu">
+                                          <li><a href="tour-guide.html">Tour Guide</a></li>
+                                          <li><a href="tour-guide-details.html">Tour Guide Details</a></li>
+                                          <li><a href="tour-checkout.html">Tour Checkout</a></li>
+                                       </ul>
+                                    </li>
+                                    <li class="menu-item-has-children">
+                                       <a href="login.html">Login</a>
+                                       <ul class="sub-menu">
+                                          <li><a href="login.html">Login</a></li>
+                                          <li><a href="register.html">Register</a></li>
+                                          <li><a href="forgot.html">Forgot</a></li>
+                                       </ul>
+                                    </li>
+                                    <li><a href="contact.html">Contact</a></li>
+                                    <li><a href="faq.html">Faq</a></li>
+                                    <li><a href="privacy-policy.html">Privacy Policy</a></li>
+                                    <li><a href="testimonial.html">Testimonial</a></li>
+                                 </ul>
+                              </li>
+                           </ul>
+                        </nav>
+                     </div>
+                  </div>
+               </div>
+               <div class="col-xl-5 col-6">
+                  <div class="tp-header-option d-flex align-items-center justify-content-end">
+                     <div class="tp-header-search p-relative d-none d-xl-block">
+                        <form action="#">
+                           <div class="tp-header-typing-wrap">
+                              <span class="typed-text"></span>
+                              <div class="typed-strings d-none">
+                                 <span>Singapore</span>
+                                 <span>Maldives</span>
+                                 <span>Dubai</span>
+                                 <span>Thailand</span>
+                                 <span>Vietnam</span>
+                                 <span>Kashmir</span>
+                              </div>
+                           </div>
+                           <input class="tp-input" type="text" placeholder="Search for">
+                           <button class="tp-header-search-btn" type="submit">
+                              <svg width="13" height="13" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                 <path d="M5.64267 10.7857C8.48288 10.7857 10.7853 8.48318 10.7853 5.64286C10.7853 2.80254 8.48288 0.5 5.64267 0.5C2.80245 0.5 0.5 2.80254 0.5 5.64286C0.5 8.48318 2.80245 10.7857 5.64267 10.7857Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" />
+                                 <path d="M12.5 12.5L9.92871 9.92857" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" />
+                              </svg>
+                           </button>
+                        </form>
+                     </div>
+                     <button class="tp-header-cart cartmini-open-btn ml-20 p-relative">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                           <path d="M7.19971 16L16.7916 15.2006C19.7929 14.9506 20.4667 14.295 20.7993 11.3018L21.4995 5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" />
+                           <path d="M5 5H22.5997" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" />
+                           <path d="M5.00025 22.6C6.21526 22.6 7.20021 21.615 7.20021 20.4C7.20021 19.185 6.21526 18.2 5.00025 18.2C3.78525 18.2 2.80029 19.185 2.80029 20.4C2.80029 21.615 3.78525 22.6 5.00025 22.6Z" stroke="currentColor" stroke-width="1.2" />
+                           <path d="M17.0999 22.6C18.3149 22.6 19.2998 21.615 19.2998 20.4C19.2998 19.185 18.3149 18.2 17.0999 18.2C15.8849 18.2 14.8999 19.185 14.8999 20.4C14.8999 21.615 15.8849 22.6 17.0999 22.6Z" stroke="currentColor" stroke-width="1.2" />
+                           <path d="M7.19971 20.4H14.8996" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" />
+                           <path d="M0.600098 0.599976H1.66268C2.70181 0.599976 3.6076 1.28703 3.85963 2.2664L7.13235 14.9841C7.29774 15.6269 7.1562 16.3077 6.74705 16.8378L5.69535 18.2" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" />
+                        </svg>
+                        <span>2</span>
+                     </button>
+                     <div class="tp-header-top-menu-item tp-header-login ml-20 d-none d-xl-block">
+                        <span class="tp-header-login-btn" id="tp-header-login-btn">
+                           <svg width="14" height="15" viewBox="0 0 14 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                              <path d="M6.84473 8.18158C10.3622 8.18158 13.3237 10.6105 13.5391 13.7441L13.5361 13.8535C13.5034 14.097 13.2968 14.2697 13.0654 14.289L13.0645 14.29C12.7649 14.313 12.5416 14.0808 12.5195 13.8163V13.8144C12.3342 11.2383 9.85653 9.20209 6.84473 9.20209C3.81703 9.20222 1.34055 11.2545 1.1709 13.83V13.832C1.15142 14.0657 0.978315 14.2535 0.763672 14.2968L0.668945 14.3056H0.625V14.3046C0.335307 14.282 0.128516 14.0353 0.151367 13.7597C0.366927 10.6106 3.32725 8.18171 6.84473 8.18158Z" fill="currentColor" stroke="currentColor" stroke-width="0.3" />
+                              <path d="M6.84473 0.149597C8.94337 0.149833 10.6426 1.84973 10.6426 3.94843C10.6423 6.04692 8.94322 7.74604 6.84473 7.74628C4.74603 7.74628 3.04613 6.04707 3.0459 3.94843C3.0459 1.84958 4.74588 0.149597 6.84473 0.149597ZM6.84473 1.18573C5.32757 1.18573 4.08203 2.43127 4.08203 3.94843C4.08227 5.46538 5.32772 6.71014 6.84473 6.71014C8.36154 6.7099 9.60621 5.46524 9.60645 3.94843C9.60645 2.43141 8.36169 1.18597 6.84473 1.18573Z" fill="currentColor" stroke="currentColor" stroke-width="0.3" />
+                           </svg>
+                        </span>
+                        <ul>
+                           <li>
+                              <a href="login.html"><i class="icon far fa-user"></i> Login</a>
+                           </li>
+                           <li>
+                              <a href="register.html"> <i class="icon fas fa-user-plus"></i> Register</a>
+                           </li>
+                        </ul>
+                     </div>
+                     <div class="tp-header-toogle-wrapper d-xl-none ml-20">
+                        <button class="tp-header-toogle">
+                           <span></span>
+                           <span></span>
+                        </button>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <!-- header-area-end -->
+
+   </header>
+
+   <main>
+
+      <!-- breadcrumb-area-start -->
+      <div class="tp-breadcrumb-area tp-breadcrumb-ptb tp-breadcrumb-overly bg-position" data-background="assets/img/breadcrumb/bg-10.jpg">
+         <div class="container">
+            <div class="row">
+               <div class="col-12">
+                  <div class="tp-breadcrumb-wrap text-center">
+                     <h2 class="tp-breadcrumb-title fs-112 text-center mb-10">Wishlist</h2>
+                     <div class="tp-breadcrumb-list tp-breadcrumb-2-list">
+                        <ul class="justify-content-center">
+                           <li><a href="index.html">Home</a></li>
+                           <li><span></span></li>
+                           <li>Wishlist</li>
+                        </ul>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <!-- breadcrumb-area-end -->
+
+      <!-- cart area start -->
+      <div class="tp-cart-area pb-120 pt-140">
+         <div class="container container-1350">
+            <div class="row justify-content-center">
+               <div class="col-xl-10 col-lg-8">
+                  <div class="tp-cart-list mb-25 mr-30">
+                     <table class="table">
+                        <thead>
+                           <tr>
+                              <th colspan="2" class="tp-cart-header-product">Product</th>
+                              <th class="tp-cart-header-price">Price</th>
+                              <th class="tp-cart-header-quantity">Quantity</th>
+                              <th></th>
+                           </tr>
+                        </thead>
+                        <tbody>
+                           <tr>
+                              <!-- img -->
+                              <td class="tp-cart-img"><a href="shop-details.html"> <img src="assets/img/product/product-1.jpg" alt=""></a></td>
+                              <!-- title -->
+                              <td class="tp-cart-title"><a href="shop-details.html">Polarized Sunglasses</a></td>
+                              <!-- price -->
+                              <td class="tp-cart-price"><span>$120.00</span></td>
+                              <!-- quantity -->
+                              <td class="tp-cart-quantity tp-product-details-quantity">
+                                 <div class="tp-product-quantity mt-10 mb-10">
+                                    <span class="tp-cart-minus">
+                                       <svg width="10" height="2" viewBox="0 0 10 2" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                          <path d="M1 1H9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                       </svg>
+                                    </span>
+                                    <input class="tp-cart-input" type="text" value="1">
+                                    <span class="tp-cart-plus">
+                                       <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                          <path d="M5 1V9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                          <path d="M1 5H9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                       </svg>
+                                    </span>
+                                 </div>
+                              </td>
+                              <!-- action -->
+                              <td class="tp-cart-action">
+                                 <button class="tp-cart-action-btn">
+                                    <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                       <path fill-rule="evenodd" clip-rule="evenodd" d="M9.53033 1.53033C9.82322 1.23744 9.82322 0.762563 9.53033 0.46967C9.23744 0.176777 8.76256 0.176777 8.46967 0.46967L5 3.93934L1.53033 0.46967C1.23744 0.176777 0.762563 0.176777 0.46967 0.46967C0.176777 0.762563 0.176777 1.23744 0.46967 1.53033L3.93934 5L0.46967 8.46967C0.176777 8.76256 0.176777 9.23744 0.46967 9.53033C0.762563 9.82322 1.23744 9.82322 1.53033 9.53033L5 6.06066L8.46967 9.53033C8.76256 9.82322 9.23744 9.82322 9.53033 9.53033C9.82322 9.23744 9.82322 8.76256 9.53033 8.46967L6.06066 5L9.53033 1.53033Z" fill="currentColor" />
+                                    </svg>
+                                    <span>Remove</span>
+                                 </button>
+                              </td>
+                           </tr>
+                           <tr>
+                              <!-- img -->
+                              <td class="tp-cart-img"><a href="shop-details.html"> <img src="assets/img/product/product-2.jpg" alt=""></a></td>
+                              <!-- title -->
+                              <td class="tp-cart-title"><a href="shop-details.html">Cotton T-shirt</a></td>
+                              <!-- price -->
+                              <td class="tp-cart-price"><span>$340.00</span></td>
+                              <!-- quantity -->
+                              <td class="tp-cart-quantity tp-product-details-quantity">
+                                 <div class="tp-product-quantity mt-10 mb-10">
+                                    <span class="tp-cart-minus">
+                                       <svg width="10" height="2" viewBox="0 0 10 2" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                          <path d="M1 1H9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                       </svg>
+                                    </span>
+                                    <input class="tp-cart-input" type="text" value="1">
+                                    <span class="tp-cart-plus">
+                                       <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                          <path d="M5 1V9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                          <path d="M1 5H9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                       </svg>
+                                    </span>
+                                 </div>
+                              </td>
+                              <!-- action -->
+                              <td class="tp-cart-action">
+                                 <button class="tp-cart-action-btn">
+                                    <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                       <path fill-rule="evenodd" clip-rule="evenodd" d="M9.53033 1.53033C9.82322 1.23744 9.82322 0.762563 9.53033 0.46967C9.23744 0.176777 8.76256 0.176777 8.46967 0.46967L5 3.93934L1.53033 0.46967C1.23744 0.176777 0.762563 0.176777 0.46967 0.46967C0.176777 0.762563 0.176777 1.23744 0.46967 1.53033L3.93934 5L0.46967 8.46967C0.176777 8.76256 0.176777 9.23744 0.46967 9.53033C0.762563 9.82322 1.23744 9.82322 1.53033 9.53033L5 6.06066L8.46967 9.53033C8.76256 9.82322 9.23744 9.82322 9.53033 9.53033C9.82322 9.23744 9.82322 8.76256 9.53033 8.46967L6.06066 5L9.53033 1.53033Z" fill="currentColor" />
+                                    </svg>
+                                    <span>Remove</span>
+                                 </button>
+                              </td>
+                           </tr>
+                           <tr>
+                              <!-- img -->
+                              <td class="tp-cart-img"><a href="shop-details.html"> <img src="assets/img/product/product-3.jpg" alt=""></a></td>
+                              <!-- title -->
+                              <td class="tp-cart-title"><a href="shop-details.html">Ramie Shirt </a></td>
+                              <!-- price -->
+                              <td class="tp-cart-price"><span>$420.00</span></td>
+                              <!-- quantity -->
+                              <td class="tp-cart-quantity tp-product-details-quantity">
+                                 <div class="tp-product-quantity mt-10 mb-10">
+                                    <span class="tp-cart-minus">
+                                       <svg width="10" height="2" viewBox="0 0 10 2" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                          <path d="M1 1H9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                       </svg>
+                                    </span>
+                                    <input class="tp-cart-input" type="text" value="1">
+                                    <span class="tp-cart-plus">
+                                       <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                          <path d="M5 1V9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                          <path d="M1 5H9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                       </svg>
+                                    </span>
+                                 </div>
+                              </td>
+                              <!-- action -->
+                              <td class="tp-cart-action">
+                                 <button class="tp-cart-action-btn">
+                                    <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                       <path fill-rule="evenodd" clip-rule="evenodd" d="M9.53033 1.53033C9.82322 1.23744 9.82322 0.762563 9.53033 0.46967C9.23744 0.176777 8.76256 0.176777 8.46967 0.46967L5 3.93934L1.53033 0.46967C1.23744 0.176777 0.762563 0.176777 0.46967 0.46967C0.176777 0.762563 0.176777 1.23744 0.46967 1.53033L3.93934 5L0.46967 8.46967C0.176777 8.76256 0.176777 9.23744 0.46967 9.53033C0.762563 9.82322 1.23744 9.82322 1.53033 9.53033L5 6.06066L8.46967 9.53033C8.76256 9.82322 9.23744 9.82322 9.53033 9.53033C9.82322 9.23744 9.82322 8.76256 9.53033 8.46967L6.06066 5L9.53033 1.53033Z" fill="currentColor" />
+                                    </svg>
+                                    <span>Remove</span>
+                                 </button>
+                              </td>
+                           </tr>
+                           <tr>
+                              <!-- img -->
+                              <td class="tp-cart-img"><a href="shop-details.html"> <img src="assets/img/product/product-4.jpg" alt=""></a></td>
+                              <!-- title -->
+                              <td class="tp-cart-title"><a href="shop-details.html">Fitted Top</a></td>
+                              <!-- price -->
+                              <td class="tp-cart-price"><span>$93.00</span></td>
+                              <!-- quantity -->
+                              <td class="tp-cart-quantity tp-product-details-quantity">
+                                 <div class="tp-product-quantity mt-10 mb-10">
+                                    <span class="tp-cart-minus">
+                                       <svg width="10" height="2" viewBox="0 0 10 2" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                          <path d="M1 1H9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                       </svg>
+                                    </span>
+                                    <input class="tp-cart-input" type="text" value="1">
+                                    <span class="tp-cart-plus">
+                                       <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                          <path d="M5 1V9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                          <path d="M1 5H9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                       </svg>
+                                    </span>
+                                 </div>
+                              </td>
+                              <!-- action -->
+                              <td class="tp-cart-action">
+                                 <button class="tp-cart-action-btn">
+                                    <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                       <path fill-rule="evenodd" clip-rule="evenodd" d="M9.53033 1.53033C9.82322 1.23744 9.82322 0.762563 9.53033 0.46967C9.23744 0.176777 8.76256 0.176777 8.46967 0.46967L5 3.93934L1.53033 0.46967C1.23744 0.176777 0.762563 0.176777 0.46967 0.46967C0.176777 0.762563 0.176777 1.23744 0.46967 1.53033L3.93934 5L0.46967 8.46967C0.176777 8.76256 0.176777 9.23744 0.46967 9.53033C0.762563 9.82322 1.23744 9.82322 1.53033 9.53033L5 6.06066L8.46967 9.53033C8.76256 9.82322 9.23744 9.82322 9.53033 9.53033C9.82322 9.23744 9.82322 8.76256 9.53033 8.46967L6.06066 5L9.53033 1.53033Z" fill="currentColor" />
+                                    </svg>
+                                    <span>Remove</span>
+                                 </button>
+                              </td>
+                           </tr>
+                        </tbody>
+                     </table>
+                  </div>
+                  <div class="tp-cart-bottom">
+                     <div class="row">
+                        <div class="col-xl-6 col-md-4">
+                           <div class="profile__btn">
+                              <a href="cart.html" class="tp-btn">Go To Cart</a>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <!-- cart area end -->
+
+   </main>
+
+   <footer>
+      <!-- tp-footer-area-start -->
+      <div class="tp-footer-area z-index-2 pt-70 p-relative" data-bg-color="#EBF8EB">
+         <img class="tp-footer-shape" src="assets/img/subscribe/shape.png" alt="">
+         <img class="tp-footer-shape-2" src="assets/img/subscribe/shape-2.png" alt="">
+         <div class="container">
+            <div class="tp-footer-subscribe-wrap pb-60">
+               <div class="row justify-content-center">
+                  <div class="col-xxl-5 col-xl-6 col-lg-7 col-md-9">
+                     <div class="tp-footer-subscribe-inner text-center">
+                        <h2 class="tp-footer-subscribe-title fw-500 mb-30">Sign up now for amazing travel offers and deals!</h2>
+                        <div class="tp-footer-subscribe-form p-relative">
+                           <form action="#" class="mb-20 p-relative">
+                              <span class="tp-footer-subscribe-icon">
+                                 <svg width="17" height="14" viewBox="0 0 17 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M2.1499 0.649902H14.1499C14.9749 0.649902 15.6499 1.3249 15.6499 2.1499V11.1499C15.6499 11.9749 14.9749 12.6499 14.1499 12.6499H2.1499C1.3249 12.6499 0.649902 11.9749 0.649902 11.1499V2.1499C0.649902 1.3249 1.3249 0.649902 2.1499 0.649902Z" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" />
+                                    <path d="M15.6499 2.1499L8.1499 7.3999L0.649902 2.1499" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" />
+                                 </svg>
+                              </span>
+                              <input class="tp-input" type="text" placeholder="Enter your email ...">
+                              <button class="tp-footer-subscribe-btn" type="submit">Subscribe</button>
+                           </form>
+                           <p>We are committed to protecting your <a href="#">privacy policy.</a></p>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="tp-footer-widget-wrap pt-75 pb-65">
+               <div class="row">
+                  <div class="col-xxl-3 col-xl-3 col-lg-4 col-md-6 col-sm-6">
+                     <div class="tp-footer-widget tp-footer-col-1 mb-30">
+                        <div class="tp-footer-logo mb-20">
+                           <a href="index.html">
+                              <img data-width="112" src="assets/img/logo/logo.png" alt="">
+                           </a>
+                        </div>
+                        <p class="tp-footer-dec">This service has taken my business to a<br>
+                        whole new level. The design and functionality<br>
+                        and user friendly.</p>
+                        <div class="tp-footer-social">
+                           <a href="#">
+                              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="18" viewBox="0 0 12 18" fill="none">
+                                 <path fill-rule="evenodd" clip-rule="evenodd" d="M1.62839 7.77713C0.911363 7.77713 0.761719 7.91782 0.761719 8.59194V9.81416C0.761719 10.4883 0.911363 10.629 1.62839 10.629H3.36172V15.5179C3.36172 16.192 3.51136 16.3327 4.22839 16.3327H5.96172C6.67874 16.3327 6.82839 16.192 6.82839 15.5179V10.629H8.77466C9.31846 10.629 9.45859 10.5296 9.60798 10.038L9.97941 8.81579C10.2353 7.97368 10.0776 7.77713 9.14609 7.77713H6.82839V5.74009C6.82839 5.29008 7.21641 4.92527 7.69505 4.92527H10.1617C10.8787 4.92527 11.0284 4.78458 11.0284 4.11046V2.48083C11.0284 1.80671 10.8787 1.66602 10.1617 1.66602H7.69505C5.30182 1.66602 3.36172 3.49004 3.36172 5.74009V7.77713H1.62839Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+                              </svg>
+                           </a>
+                           <a href="#">
+                              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="14" viewBox="0 0 16 14" fill="none">
+                                 <path fill-rule="evenodd" clip-rule="evenodd" d="M5.28884 0.714844H0.666992L6.14691 7.9153L1.01754 13.9556H3.38746L7.26697 9.38713L10.7118 13.9136H15.3337L9.69453 6.50391L9.70451 6.51669L14.5599 0.798959H12.19L8.58427 5.04503L5.28884 0.714844ZM3.21817 1.97588H4.65702L12.7825 12.6525H11.3436L3.21817 1.97588Z" fill="currentColor"/>
+                              </svg>
+                           </a>
+                           <a href="#">
+                              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                 <circle cx="9.99991" cy="9.99991" r="8.38077" stroke="currentColor" stroke-width="1.5"/>
+                                 <path d="M18.3799 11.0604C17.6032 10.9148 16.8043 10.8389 15.9891 10.8389C11.5034 10.8389 7.51372 13.1373 4.9707 16.7054" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+                                 <path d="M15.8665 4.13281C13.2437 7.2064 9.30255 9.16128 4.8957 9.16128C3.76828 9.16128 2.67133 9.03332 1.61914 8.79143" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+                                 <path d="M12.1938 18.3815C12.4039 17.3641 12.5142 16.3104 12.5142 15.2309C12.5142 9.93756 9.86111 5.26259 5.80957 2.45801" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+                              </svg>
+                           </a>
+                           <a href="#">
+                              <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                 <path d="M1.66602 8.99935C1.66602 5.54238 1.66602 3.8139 2.73996 2.73996C3.8139 1.66602 5.54238 1.66602 8.99935 1.66602C12.4563 1.66602 14.1848 1.66602 15.2587 2.73996C16.3327 3.8139 16.3327 5.54238 16.3327 8.99935C16.3327 12.4563 16.3327 14.1848 15.2587 15.2587C14.1848 16.3327 12.4563 16.3327 8.99935 16.3327C5.54238 16.3327 3.8139 16.3327 2.73996 15.2587C1.66602 14.1848 1.66602 12.4563 1.66602 8.99935Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+                                 <path d="M12.4747 9.00103C12.4747 10.9195 10.9195 12.4747 9.00103 12.4747C7.08256 12.4747 5.52734 10.9195 5.52734 9.00103C5.52734 7.08256 7.08256 5.52734 9.00103 5.52734C10.9195 5.52734 12.4747 7.08256 12.4747 9.00103Z" stroke="currentColor" stroke-width="1.5"/>
+                                 <path d="M13.251 4.75391L13.242 4.75391" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                              </svg>
+                           </a>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-xxl-2 col-xl-2 col-lg-4 col-md-6 col-sm-6">
+                     <div class="tp-footer-widget tp-footer-col-2 mb-30">
+                        <h3 class="tp-footer-widget-title fw-600 mb-15">Company</h3>
+                        <div class="tp-footer-widget-menu">
+                           <ul>
+                              <li><a href="#">About us</a></li>
+                              <li><a href="#">Carrer</a></li>
+                              <li><a href="#">Blog</a></li>
+                              <li><a href="#">Partner</a></li>
+                           </ul>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-xxl-2 col-xl-2 col-lg-4 col-md-4 col-sm-6">
+                     <div class="tp-footer-widget tp-footer-col-3 mb-30">
+                        <h3 class="tp-footer-widget-title fw-600 mb-15">Useful Links</h3>
+                        <div class="tp-footer-widget-menu">
+                           <ul>
+                              <li><a href="#">Privacy Policy</a></li>
+                              <li><a href="#">Terms & Conditions</a></li>
+                              <li><a href="#">Register</a></li>
+                              <li><a href="#">Stories</a></li>
+                           </ul>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-xxl-3 col-xl-2 col-lg-4 col-md-4 col-sm-6">
+                     <div class="tp-footer-widget tp-footer-col-4 mb-30">
+                        <h3 class="tp-footer-widget-title fw-600 mb-15">Services</h3>
+                        <div class="tp-footer-widget-menu">
+                           <ul>
+                              <li><a href="#">Tour Packages</a></li>
+                              <li><a href="#">Travel Guides & Tips</a></li>
+                              <li><a href="#">Local Experiences</a></li>
+                              <li><a href="#">Travel Insurance</a></li>
+                           </ul>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-xxl-2 col-xl-3 col-lg-4 col-md-4 col-sm-6">
+                     <div class="tp-footer-widget tp-footer-col-5 mb-30">
+                        <h3 class="tp-footer-widget-title fw-600 mb-15">Contact</h3>
+                        <div class="tp-footer-contact">
+                           <a href="https://www.google.com/maps" target="_blank" class="location mb-20 d-inline-block">4140 Parker Rd. Allentown New Mexico 31134</a>
+                           <span class="support d-block mb-10">Supporter :</span>
+                           <a href="mailto:+(704)555-0127" class="phone">+(704) 555-0127</a>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="container-fluid container-1856">
+            <div class="tp-instagram-wrap">
+               <div class="swiper tp-instagram-slide">
+                  <div class="swiper-wrapper slide-transtion">
+                     <div class="swiper-slide">
+                        <div class="tp-instagram-thumb p-relative">
+                           <a href="#">
+                              <img class="w-100" src="assets/img/footer/thumb.jpg" alt="instagram">
+                           </a>
+                        </div>
+                     </div>
+                     <div class="swiper-slide">
+                        <div class="tp-instagram-thumb p-relative">
+                           <a href="#">
+                              <img class="w-100" src="assets/img/footer/thumb-2.jpg" alt="instagram">
+                           </a>
+                        </div>
+                     </div>
+                     <div class="swiper-slide">
+                        <div class="tp-instagram-thumb p-relative">
+                           <a href="#">
+                              <img class="w-100" src="assets/img/footer/thumb-3.jpg" alt="instagram">
+                           </a>
+                        </div>
+                     </div>
+                     <div class="swiper-slide">
+                        <div class="tp-instagram-thumb p-relative">
+                           <a href="#">
+                              <img class="w-100" src="assets/img/footer/thumb-4.jpg" alt="instagram">
+                           </a>
+                        </div>
+                     </div>
+                     <div class="swiper-slide">
+                        <div class="tp-instagram-thumb p-relative">
+                           <a href="#">
+                              <img class="w-100" src="assets/img/footer/thumb-5.jpg" alt="instagram">
+                           </a>
+                        </div>
+                     </div>
+                     <div class="swiper-slide">
+                        <div class="tp-instagram-thumb p-relative">
+                           <a href="#">
+                              <img class="w-100" src="assets/img/footer/thumb-3.jpg" alt="instagram">
+                           </a>
+                        </div>
+                     </div>
+                     <div class="swiper-slide">
+                        <div class="tp-instagram-thumb p-relative">
+                           <a href="#">
+                              <img class="w-100" src="assets/img/footer/thumb-4.jpg" alt="instagram">
+                           </a>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="tp-copyright-area pt-25 pb-15">
+            <div class="container">
+               <div class="row align-items-center">
+                  <div class="col-lg-5">
+                     <div class="tp-copyright-text">
+                        <p class="tp-ff-inter mb-5">2026 <a href="#">Themepure </a>© All rights reserved</p>
+                     </div>
+                  </div>
+                  <div class="col-lg-7">
+                     <div class="tp-copyright-payment d-flex flex-wrap align-items-center justify-content-lg-end">
+                        <p class="fw-500 mb-5">Payment Channels :</p>
+                        <a href="#"><img src="assets/img/footer/payment.png" alt=""></a>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <!-- tp-footer-area-end -->
+   </footer>
+
+
+   <!-- JS here -->
+   <script src="assets/js/vendor/jquery.js"></script>
+   <script src="assets/js/bootstrap-bundle.js"></script>
+   <script src="assets/js/swiper-bundle.js"></script>
+   <script src="assets/js/magnific-popup.js"></script>
+   <script src="assets/js/nice-select.js"></script>
+   <script src="assets/js/range-slider.js"></script>
+   <script src="assets/js/purecounter.js"></script>
+   <script src="assets/js/moment.min.js"></script>
+   <script src="assets/js/daterangepicker.js"></script>
+   <script src="assets/js/btnloadmore.js"></script>
+   <script src="assets/js/typed.js"></script>
+   <script src="assets/js/wow.min.js"></script>
+   <script src="assets/js/ajax-form.js"></script>
+   <script src="assets/js/slider-init.js"></script>
+   <script src="assets/js/main.js"></script>
+</body>
+
+</html>

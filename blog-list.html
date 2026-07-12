@@ -1,0 +1,636 @@
+<!doctype html>
+<html class="no-js" lang="zxx">
+
+<head>
+   <meta charset="utf-8">
+   <meta http-equiv="x-ua-compatible" content="ie=edge">
+   <title>Turie – Travel & Tour Booking HTML Template</title>
+   <meta name="description" content="">
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+
+   <!-- Place favicon.ico in the root directory -->
+   <link rel="shortcut icon" type="image/x-icon" href="assets/img/logo/favicon.png">
+
+   <!-- CSS here -->
+   <link rel="stylesheet" href="assets/css/bootstrap.css">
+   <link rel="stylesheet" href="assets/css/swiper-bundle.css">
+   <link rel="stylesheet" href="assets/css/magnific-popup.css">
+   <link rel="stylesheet" href="assets/css/font-awesome-pro.css">
+   <link rel="stylesheet" href="assets/css/daterangepicker.css">
+   <link rel="stylesheet" href="assets/css/range-slider.css">
+   <link rel="stylesheet" href="assets/css/spacing.css">
+   <link rel="stylesheet" href="assets/css/main.css">
+</head>
+
+<body>
+   <!--[if lte IE 9]>
+      <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
+      <![endif]-->
+
+   <!-- preloader-here start -->
+   <div id="loading">
+      <div class="loader">
+         <div class="plane">
+            <img src="assets/img/preloader/fly.png" class="plane-img">
+         </div>
+         <div class="earth-wrapper">
+            <div class="earth"></div>
+         </div>  
+      </div>
+   </div>
+   <!-- preloader-here end -->
+
+   <!-- back to top start -->
+   <div class="back-to-top-wrapper">
+      <button id="back_to_top" type="button" class="back-to-top-btn">
+         <i class="fas fa-chevron-up"></i>
+      </button>
+   </div>
+   <!-- back to top end -->
+
+   <!-- tp-offcanvas start -->
+   <div class="tp-offcanvas">
+      <div class="tp-offcanvas-header mb-30">
+         <div class="tp-offcanvas-logo">
+            <a href="index.html"><img data-width="108" src="assets/img/logo/logo.png" alt=""></a>
+         </div>
+         <div class="tp-offcanvas-close">
+            <button class="tp-offcanvas-close-button"><i class="fal fa-times"></i></button>
+         </div>
+      </div>
+      <div class="tp-header-search p-relative mb-30">
+         <form action="#">
+            <input class="tp-input" type="text" placeholder="Search for Thailand">
+            <button class="tp-header-search-btn" type="submit">
+               <i class="far fa-search"></i>
+            </button>
+         </form>
+      </div>
+      <div class="tp-offcanvas-menu mb-50">
+         <nav> 
+         </nav>
+      </div>
+      <div class="tp-offcanvas-content mb-40">
+         <h3 class="tp-offcanvas-title"> Hello There!</h3>
+         <p>Lorem ipsum dolor sit amet, consect etur adipiscing elit. </p>
+      </div>
+      <div class="tp-offcanvas-gallery mb-50">
+         <a class="popup-image" href="assets/img/tour/01.jpg"><img src="assets/img/tour/01.jpg" alt="tour"></a>
+         <a class="popup-image" href="assets/img/tour/02.jpg"><img src="assets/img/tour/02.jpg" alt="tour"></a>
+         <a class="popup-image" href="assets/img/tour/03.jpg"><img src="assets/img/tour/03.jpg" alt="tour"></a>
+         <a class="popup-image" href="assets/img/tour/04.jpg"><img src="assets/img/tour/04.jpg" alt="tour"></a>
+      </div>
+      <div class="tp-offcanvas-info mb-50">
+         <h3 class="tp-offcanvas-title">Information</h3>
+         <span><a href="#">+ 4 20 7700 1007</a></span>
+         <span><a href="#">hello@turie.com</a></span>
+         <span><a href="#">Avenue de Roma 158b, Lisboa</a></span>
+      </div>
+      <div class="tp-offcanvas-social">
+         <h3 class="tp-offcanvas-title"> Follow Us</h3>
+         <a href="#"><i class="fab fa-facebook-f"></i></a>
+         <a href="#"><i class="fab fa-x-twitter"></i></a>
+         <a href="#"><i class="fab fa-dribbble"></i></a>
+         <a href="#"><i class="fab fa-instagram"></i></a>
+      </div>
+   </div>
+   <div class="tp-offcanvas-overlay"></div>
+   <!-- tp-offcanvas end -->
+
+   <header class="tp-header-height">
+
+      <!-- header-area-start -->
+      <div id="header-sticky" class="tp-header-blur tp-header-area tp-header-lg-ptb">
+         <div class="container">
+            <div class="row align-items-center">
+               <div class="col-xl-7 col-6">
+                  <div class="tp-header-left d-flex align-items-center">
+                     <div class="tp-header-logo mr-60">
+                        <a href="index.html">
+                           <img width="115" src="assets/img/logo/logo.png" alt="">
+                        </a>
+                     </div>
+                     <div class="tp-main-menu tp-menu-dropdown d-none d-xl-block">
+                        <nav class="tp-mobile-menu-active">
+                           <ul>
+                              <li class="has-dropdown">
+                                 <a href="index.html">Home</a>
+                                 <ul class="sub-menu">
+                                    <li><a href="index.html">Home 01</a></li>
+                                    <li><a href="index-2.html">Home 02</a></li>
+                                    <li><a href="index-3.html">Home 03</a></li>
+                                    <li><a href="index-4.html">Home 04</a></li>
+                                    <li><a href="index-5.html">Home 05</a></li>
+                                    <li><a href="index-6.html">Home 06</a></li>
+                                    <li><a href="index-7.html">Home 07</a></li>
+                                 </ul>
+                              </li>
+                              <li class="has-dropdown">
+                                 <a href="city-details-2.html">Detonations</a>
+                                 <div class="sub-menu tp-megamenu-wrapper">
+                                    <div class="row">
+                                       <div class="col-xl-4">
+                                          <div class="tp-megamenu-list">
+                                             <ul>
+                                                <li>
+                                                   <a href="city-details-2.html" class="d-flex align-items-center gap-2">
+                                                      <div class="tp-megamenu-list-thumb">
+                                                         <img src="assets/img/menu/01.png" alt="des">
+                                                      </div>
+                                                      <div class="tp-megamenu-list-content">
+                                                         <span class="tp-megamenu-list-subtitle">Things to do in</span>
+                                                         <span class="tp-megamenu-list-title">Osaka</span>
+                                                      </div>
+                                                   </a>
+                                                </li>
+                                                <li>
+                                                   <a href="city-details-3.html" class="d-flex align-items-center gap-2">
+                                                      <div class="tp-megamenu-list-thumb">
+                                                         <img src="assets/img/menu/02.png" alt="des">
+                                                      </div>
+                                                      <div class="tp-megamenu-list-content">
+                                                         <span class="tp-megamenu-list-subtitle">Things to do in</span>
+                                                         <span class="tp-megamenu-list-title">Sapporo</span>
+                                                      </div>
+                                                   </a>
+                                                </li>
+                                                <li>
+                                                   <a href="city-details-4.html" class="d-flex align-items-center gap-2">
+                                                      <div class="tp-megamenu-list-thumb">
+                                                         <img src="assets/img/menu/03.png" alt="des">
+                                                      </div>
+                                                      <div class="tp-megamenu-list-content">
+                                                         <span class="tp-megamenu-list-subtitle">Things to do in</span>
+                                                         <span class="tp-megamenu-list-title">Narita</span>
+                                                      </div>
+                                                   </a>
+                                                </li>
+                                                <li>
+                                                   <a href="city-details-2.html" class="d-flex align-items-center gap-2">
+                                                      <div class="tp-megamenu-list-thumb">
+                                                         <img src="assets/img/menu/04.png" alt="des">
+                                                      </div>
+                                                      <div class="tp-megamenu-list-content">
+                                                         <span class="tp-megamenu-list-subtitle">Things to do in</span>
+                                                         <span class="tp-megamenu-list-title">Los Angeles</span>
+                                                      </div>
+                                                   </a>
+                                                </li>
+                                             </ul>
+                                          </div>
+                                       </div>
+                                       <div class="col-xl-4">
+                                          <div class="tp-megamenu-list">
+                                             <ul>
+                                                <li>
+                                                   <a href="city-details-3.html" class="d-flex align-items-center gap-2">
+                                                      <div class="tp-megamenu-list-thumb">
+                                                         <img src="assets/img/menu/05.png" alt="des">
+                                                      </div>
+                                                      <div class="tp-megamenu-list-content">
+                                                         <span class="tp-megamenu-list-subtitle">Things to do in</span>
+                                                         <span class="tp-megamenu-list-title">Greece</span>
+                                                      </div>
+                                                   </a>
+                                                </li>
+                                                <li>
+                                                   <a href="city-details-4.html" class="d-flex align-items-center gap-2">
+                                                      <div class="tp-megamenu-list-thumb">
+                                                         <img src="assets/img/menu/06.png" alt="des">
+                                                      </div>
+                                                      <div class="tp-megamenu-list-content">
+                                                         <span class="tp-megamenu-list-subtitle">Things to do in</span>
+                                                         <span class="tp-megamenu-list-title">Turkey</span>
+                                                      </div>
+                                                   </a>
+                                                </li>
+                                                <li>
+                                                   <a href="city-details-2.html" class="d-flex align-items-center gap-2">
+                                                      <div class="tp-megamenu-list-thumb">
+                                                         <img src="assets/img/destination/six/thumb.jpg" alt="des">
+                                                      </div>
+                                                      <div class="tp-megamenu-list-content">
+                                                         <span class="tp-megamenu-list-subtitle">Things to do in</span>
+                                                         <span class="tp-megamenu-list-title">Maldives</span>
+                                                      </div>
+                                                   </a>
+                                                </li>
+                                                <li>
+                                                   <a href="city-details-3.html" class="d-flex align-items-center gap-2">
+                                                      <div class="tp-megamenu-list-thumb">
+                                                         <img src="assets/img/destination/six/thumb-2.jpg" alt="des">
+                                                      </div>
+                                                      <div class="tp-megamenu-list-content">
+                                                         <span class="tp-megamenu-list-subtitle">Things to do in</span>
+                                                         <span class="tp-megamenu-list-title">Canada</span>
+                                                      </div>
+                                                   </a>
+                                                </li>
+                                             </ul>
+                                          </div>
+                                       </div>
+                                       <div class="col-xl-4">
+                                          <div class="tp-megamenu-list">
+                                             <ul>
+                                                <li>
+                                                   <a href="city-details-4.html" class="d-flex align-items-center gap-2">
+                                                      <div class="tp-megamenu-list-thumb">
+                                                         <img src="assets/img/destination/six/thumb-3.jpg" alt="des">
+                                                      </div>
+                                                      <div class="tp-megamenu-list-content">
+                                                         <span class="tp-megamenu-list-subtitle">Things to do in</span>
+                                                         <span class="tp-megamenu-list-title">Indonesia</span>
+                                                      </div>
+                                                   </a>
+                                                </li>
+                                                <li>
+                                                   <a href="city-details-2.html" class="d-flex align-items-center gap-2">
+                                                      <div class="tp-megamenu-list-thumb">
+                                                         <img src="assets/img/destination/six/thumb-4.jpg" alt="des">
+                                                      </div>
+                                                      <div class="tp-megamenu-list-content">
+                                                         <span class="tp-megamenu-list-subtitle">Things to do in</span>
+                                                         <span class="tp-megamenu-list-title">Australia</span>
+                                                      </div>
+                                                   </a>
+                                                </li>
+                                                <li>
+                                                   <a href="city-details-3.html" class="d-flex align-items-center gap-2">
+                                                      <div class="tp-megamenu-list-thumb">
+                                                         <img src="assets/img/destination/six/thumb-5.jpg" alt="des">
+                                                      </div>
+                                                      <div class="tp-megamenu-list-content">
+                                                         <span class="tp-megamenu-list-subtitle">Things to do in</span>
+                                                         <span class="tp-megamenu-list-title">Switzerland</span>
+                                                      </div>
+                                                   </a>
+                                                </li>
+                                                <li>
+                                                   <a href="city-details-4.html" class="d-flex align-items-center gap-2">
+                                                      <div class="tp-megamenu-list-thumb">
+                                                         <img src="assets/img/destination/six/thumb-6.jpg" alt="des">
+                                                      </div>
+                                                      <div class="tp-megamenu-list-content">
+                                                         <span class="tp-megamenu-list-subtitle">Things to do in</span>
+                                                         <span class="tp-megamenu-list-title">Thailand</span>
+                                                      </div>
+                                                   </a>
+                                                </li>
+                                             </ul>
+                                          </div>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </li>
+                              <li class="has-dropdown">
+                                 <a href="tour-grid.html">Tour Listing</a>
+                                 <ul class="sub-menu">
+                                    <li><a href="tour-grid.html">Tour Grid</a></li>
+                                    <li><a href="tour-grid-sidebar.html">Tour Grid Sidebar</a></li>
+                                    <li><a href="tour-grid-map.html">Tour Grid Map</a></li>
+                                    <li><a href="tour-list-map.html">Tour List Map</a></li>
+                                    <li><a href="tour-list-left-sidebar.html">Tour List Left Sidebar</a></li>
+                                    <li><a href="tour-list-right-sidebar.html">Tour List Right Sidebar</a></li>
+                                    <li><a href="tour-details.html">Tour Details 01</a></li>
+                                    <li><a href="tour-details-2.html">Tour Details 02</a></li>
+                                    <li><a href="tour-details-3.html">Tour Details 03</a></li>
+                                    <li><a href="tour-details-4.html">Tour Details 04</a></li>
+                                    <li><a href="tour-details-5.html">Tour Details 05</a></li>
+                                    <li><a href="tour-details-6.html">Tour Details 06</a></li>
+                                    <li><a href="tour-details-7.html">Tour Details 07</a></li>
+                                 </ul>
+                              </li>
+                              <li class="has-dropdown active">
+                                 <a href="blog.html">Blog</a>
+                                 <ul class="sub-menu">
+                                    <li><a href="blog.html">Blog</a></li>
+                                    <li class="active"><a href="blog-list.html">Blog List</a></li>
+                                    <li><a href="blog-standard.html">Blog Standard</a></li>
+                                    <li><a href="blog-details.html">Blog Details</a></li>
+                                    <li><a href="blog-details-2.html">Blog Details 2</a></li>
+                                 </ul>
+                              </li>
+                              <li class="has-dropdown">
+                                 <a href="#">Page</a>
+                                 <ul class="sub-menu">
+                                    <li><a href="about.html">About</a></li>
+                                    <li><a href="career.html">Career</a></li>
+                                    <li><a href="career-details.html">Career Details</a></li>
+                                    <li class="menu-item-has-children">
+                                       <a href="shop.html">Shop</a>
+                                       <ul class="sub-menu">
+                                          <li><a href="shop.html">Shop</a></li>
+                                          <li><a href="shop-details.html">Shop Details</a></li>
+                                          <li><a href="cart.html">Cart</a></li>
+                                          <li><a href="checkout.html">Checkout</a></li>
+                                          <li><a href="wishlist.html">wishlist</a></li>
+                                       </ul>
+                                    </li>
+                                    <li class="menu-item-has-children">
+                                       <a href="city-details.html">Destination</a>
+                                       <ul class="sub-menu">
+                                          <li><a href="city-details.html">City Details 01</a></li>
+                                          <li><a href="city-details-2.html">City Details 02</a></li>
+                                          <li><a href="city-details-3.html">City Details 03</a></li>
+                                          <li><a href="city-details-4.html">City Details 04</a></li>
+                                       </ul>
+                                    </li>
+                                    <li class="menu-item-has-children">
+                                       <a href="tour-guide.html">Tour Guide</a>
+                                       <ul class="sub-menu">
+                                          <li><a href="tour-guide.html">Tour Guide</a></li>
+                                          <li><a href="tour-guide-details.html">Tour Guide Details</a></li>
+                                          <li><a href="tour-checkout.html">Tour Checkout</a></li>
+                                       </ul>
+                                    </li>
+                                    <li class="menu-item-has-children">
+                                       <a href="login.html">Login</a>
+                                       <ul class="sub-menu">
+                                          <li><a href="login.html">Login</a></li>
+                                          <li><a href="register.html">Register</a></li>
+                                          <li><a href="forgot.html">Forgot</a></li>
+                                       </ul>
+                                    </li>
+                                    <li><a href="contact.html">Contact</a></li>
+                                    <li><a href="faq.html">Faq</a></li>
+                                    <li><a href="privacy-policy.html">Privacy Policy</a></li>
+                                    <li><a href="testimonial.html">Testimonial</a></li>
+                                 </ul>
+                              </li>
+                           </ul>
+                        </nav>
+                     </div>
+                  </div>
+               </div>
+               <div class="col-xl-5 col-6">
+                  <div class="tp-header-option d-flex align-items-center justify-content-end">
+                     <div class="tp-header-search p-relative d-none d-xl-block">
+                        <form action="#">
+                           <div class="tp-header-typing-wrap">
+                              <span class="typed-text"></span>
+                              <div class="typed-strings d-none">
+                                 <span>Singapore</span>
+                                 <span>Maldives</span>
+                                 <span>Dubai</span>
+                                 <span>Thailand</span>
+                                 <span>Vietnam</span>
+                                 <span>Kashmir</span>
+                              </div>
+                           </div>
+                           <input class="tp-input" type="text" placeholder="Search for">
+                           <button class="tp-header-search-btn" type="submit">
+                              <i class="far fa-search"></i>
+                           </button>
+                        </form>
+                     </div>
+                     <div class="tp-header-contact ml-10 d-none d-sm-block">
+                        <a href="tel:(406)555-0120">(406) 555-0120</a>
+                     </div>
+                     <div class="tp-header-top-menu-item tp-header-login ml-10 d-none d-xl-block">
+                        <span class="tp-header-login-btn" id="tp-header-login-btn">
+                           <i class="far fa-user"></i>
+                        </span>
+                        <ul>
+                           <li>
+                              <a href="login.html"><i class="icon far fa-user"></i> Login</a>
+                           </li>
+                           <li>
+                              <a href="register.html"> <i class="icon fas fa-user-plus"></i> Register</a>
+                           </li>
+                        </ul>
+                     </div>
+                     <div class="tp-header-toogle-wrapper d-xl-none ml-10">
+                        <button class="tp-header-toogle">
+                           <span></span>
+                           <span></span>
+                        </button>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <!-- header-area-end -->
+
+   </header>
+
+<main>
+
+   <!-- breadcrumb-area-start -->
+   <div class="tp-breadcrumb-area tp-breadcrumb-ptb tp-breadcrumb-overly bg-position" data-background="assets/img/breadcrumb/bg-10.jpg">
+      <div class="container">
+         <div class="row">
+            <div class="col-12">
+               <div class="tp-breadcrumb-wrap text-center">
+                  <h2 class="tp-breadcrumb-title fs-112 text-center mb-0">Blog List</h2>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+   <!-- breadcrumb-area-end -->
+
+   <!-- tp-blog-area-start -->
+   <div class="tp-blog-area tp-tour-ptb-2 pt-140 pb-100">
+      <div class="container">
+         <div class="row">
+            <div class="col-xxl-9 col-xl-8">
+               <div class="tp-blog-list-wrap mb-40">
+                  <div class="tp-about-section-title p-relative pb-30">
+                     <h2 class="tp-section-title fs-32 fw-600">Travel articles</h2>
+                     <p>Our expert travel guides bring every destination.</p>
+                  </div>
+
+                  <!-- Blog cards injected here by blog-loader.js -->
+                  <div id="blog-list"></div>
+
+                  <div class="tp-pagination text-center mt-60">
+                     <nav>
+                        <ul>
+                           <!-- Pagination links injected here by blog-loader.js -->
+                        </ul>
+                     </nav>
+                  </div>
+               </div>
+            </div>
+
+            <div class="col-xxl-3 col-xl-4">
+               <div class="sidebar-wrapper mb-40">
+
+                  <!-- Search -->
+                  <div class="sidebar-widget mb-45">
+                     <div class="sidebar-search">
+                        <form action="blog-list.html" method="get">
+                           <div class="sidebar-search-input p-relative">
+                              <input type="text" name="search" placeholder="Search...">
+                              <button type="submit">
+                                 <i class="far fa-search"></i>
+                              </button>
+                           </div>
+                        </form>
+                     </div>
+                  </div>
+
+                  <!-- Categories (auto-populated, with post counts) -->
+                  <div class="sidebar-widget mb-45">
+                     <h3 class="sidebar-widget-title mb-30">Categories</h3>
+                     <div class="sidebar-widget-content">
+                        <ul class="sidebar-category-list" id="blog-categories">
+                           <!-- Injected by blog-loader.js -->
+                        </ul>
+                     </div>
+                  </div>
+
+                  <!-- Latest Posts (auto-populated) -->
+                  <div class="sidebar-widget mb-45">
+                     <h3 class="sidebar-widget-title mb-30">Latest Posts</h3>
+                     <div class="sidebar-widget-content">
+                        <div id="blog-latest-posts">
+                           <!-- Injected by blog-loader.js -->
+                        </div>
+                     </div>
+                  </div>
+
+                  <!-- Popular Tags (auto-populated) -->
+                  <div class="sidebar-widget">
+                     <h3 class="sidebar-widget-title mb-30">Popular Tag</h3>
+                     <div class="sidebar-widget-content">
+                        <div class="tagcloud" id="blog-tags">
+                           <!-- Injected by blog-loader.js -->
+                        </div>
+                     </div>
+                  </div>
+
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+   <!-- tp-tour-area-end -->
+
+</main>
+
+<script src="assets/js/pexels-loader.js"></script>
+<script src="assets/js/blog-loader.js"></script>
+
+   <footer>
+      <!-- tp-footer-area-start -->
+      <div class="tp-footer-area tp-footer-two z-index-2">
+         <div class="container">
+            <div class="row">
+               <div class="tp-footer-two-shape">
+                  <img class="100%" src="assets/img/footer/two/shae.png" alt="tour">
+               </div>
+            </div>   
+            <div class="tp-footer-widget-wrap pt-95 pb-70">
+               <div class="row">
+                  <div class="col-xxl-3 col-xl-3 col-lg-4 col-md-6 col-sm-6">
+                     <div class="tp-footer-widget tp-footer-col-1 mb-30">
+                        <div class="tp-footer-logo mb-20">
+                           <a href="index.html">
+                              <img data-width="112" src="assets/img/logo/logo.png" alt="">
+                           </a>
+                        </div>
+                        <p class="tp-footer-dec">This service has taken my business to a<br>
+                        whole new level. The design and functionality<br>
+                        and user friendly.</p>
+                        <div class="tp-footer-social">
+                           <a href="#"><i class="fab fa-facebook-f"></i></a>
+                           <a href="#"><i class="fab fa-x-twitter"></i></a>
+                           <a href="#"><i class="fab fa-dribbble"></i></a>
+                           <a href="#"><i class="fab fa-instagram"></i></a>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-xxl-2 col-xl-2 col-lg-4 col-md-6 col-sm-6">
+                     <div class="tp-footer-widget tp-footer-col-2 mb-30">
+                        <h3 class="tp-footer-widget-title fw-600 mb-15">Company</h3>
+                        <div class="tp-footer-widget-menu">
+                           <ul>
+                              <li><a href="#">About us</a></li>
+                              <li><a href="#">Carrer</a></li>
+                              <li><a href="#">Blog</a></li>
+                              <li><a href="#">Partner</a></li>
+                           </ul>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-xxl-2 col-xl-2 col-lg-4 col-md-4 col-sm-6">
+                     <div class="tp-footer-widget tp-footer-col-3 mb-30">
+                        <h3 class="tp-footer-widget-title fw-600 mb-15">Useful Links</h3>
+                        <div class="tp-footer-widget-menu">
+                           <ul>
+                              <li><a href="#">Privacy Policy</a></li>
+                              <li><a href="#">Terms & Conditions</a></li>
+                              <li><a href="#">Register</a></li>
+                              <li><a href="#">Stories</a></li>
+                           </ul>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-xxl-3 col-xl-2 col-lg-4 col-md-4 col-sm-6">
+                     <div class="tp-footer-widget tp-footer-col-4 mb-30">
+                        <h3 class="tp-footer-widget-title fw-600 mb-15">Services</h3>
+                        <div class="tp-footer-widget-menu">
+                           <ul>
+                              <li><a href="#">Tour Packages</a></li>
+                              <li><a href="#">Travel Guides & Tips</a></li>
+                              <li><a href="#">Local Experiences</a></li>
+                              <li><a href="#">Travel Insurance</a></li>
+                           </ul>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-xxl-2 col-xl-3 col-lg-4 col-md-4 col-sm-6">
+                     <div class="tp-footer-widget tp-footer-col-5 mb-30">
+                        <h3 class="tp-footer-widget-title fw-600 mb-15">Contact</h3>
+                        <div class="tp-footer-contact">
+                           <a href="https://www.google.com/maps" target="_blank" class="location mb-20 d-inline-block">4140 Parker Rd. Allentown New Mexico 31134</a>
+                           <span class="support d-block mb-10">Supporter :</span>
+                           <a href="mailto:+(704)555-0127" class="phone">+(704) 555-0127</a>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="tp-copyright-wrap pt-25 pb-15">
+               <div class="row align-items-center">
+                  <div class="col-lg-5">
+                     <div class="tp-copyright-text">
+                        <p class="tp-ff-inter mb-5">2026 <a href="#">Themepure </a>© All rights reserved</p>
+                     </div>
+                  </div>
+                  <div class="col-lg-7">
+                     <div class="tp-copyright-payment d-flex flex-wrap align-items-center justify-content-lg-end">
+                        <p class="fw-600 mb-5">Payment Channels :</p>
+                        <a href="#"><img src="assets/img/footer/payment.png" alt=""></a>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <!-- tp-footer-area-end -->
+   </footer>
+
+
+   <!-- JS here -->
+   <script src="assets/js/vendor/jquery.js"></script>
+   <script src="assets/js/bootstrap-bundle.js"></script>
+   <script src="assets/js/swiper-bundle.js"></script>
+   <script src="assets/js/magnific-popup.js"></script>
+   <script src="assets/js/nice-select.js"></script>
+   <script src="assets/js/range-slider.js"></script>
+   <script src="assets/js/purecounter.js"></script>
+   <script src="assets/js/moment.min.js"></script>
+   <script src="assets/js/daterangepicker.js"></script>
+   <script src="assets/js/btnloadmore.js"></script>
+   <script src="assets/js/typed.js"></script>
+   <script src="assets/js/wow.min.js"></script>
+   <script src="assets/js/ajax-form.js"></script>
+   <script src="assets/js/slider-init.js"></script>
+   <script src="assets/js/main.js"></script>
+   <script src="assets/js/blog-loader.js"></script>
+</body>
+
+</html>
