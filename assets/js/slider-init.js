@@ -158,7 +158,7 @@
 	////////////////////////////////////////////////////
 	// 07. tp-destination-two-slider
 	var swiper = new Swiper(".tp-destination-two-slider", {
-		spaceBetween: 32,
+		spaceBetween: 20,
 		loop: true,
 		freemode: true,
 		slidesPerView: 1,
@@ -223,7 +223,7 @@
 	////////////////////////////////////////////////////
 	// 10. tp-destination-3-slider
 	var swiper = new Swiper(".tp-destination-3-slider", {
-		spaceBetween: 32,
+		spaceBetween: 20,
 		loop: true,
 		freemode: true,
 		slidesPerView: 1,

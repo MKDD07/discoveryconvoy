@@ -5628,10 +5628,10 @@ td.today.active.start-date.active.end-date.available {
   }
 }
 .tp-tour-item {
-  backdrop-filter: blur(32px);
-  box-shadow: 0 9px 20px 0 rgba(0, 0, 0, 0.05);
   background: var(--tp-common-white);
   border-radius: 16px;
+  border: 1px solid rgba(17, 17, 17, 0.1);
+  height: 480px;
 }
 .tp-tour-item:hover .tp-tour-thumb .image::before {
   opacity: 1;
@@ -5699,17 +5699,17 @@ td.today.active.start-date.active.end-date.available {
   margin-top: 2px;
 }
 .tp-tour-title {
-  font-size: 24px;
+  font-size: 20px;
   line-height: 125%;
 }
 @media only screen and (min-width: 1600px) and (max-width: 1700px) {
   .tp-tour-title {
-    font-size: 23px;
+    font-size: 20px;
   }
 }
 @media only screen and (min-width: 1400px) and (max-width: 1599px), only screen and (min-width: 1200px) and (max-width: 1399px), only screen and (min-width: 992px) and (max-width: 1199px), only screen and (min-width: 768px) and (max-width: 991px), only screen and (min-width: 576px) and (max-width: 767px), (max-width: 574.98px) {
   .tp-tour-title {
-    font-size: 20px;
+    font-size: 17px;
   }
 }
 .tp-tour-title a:hover {

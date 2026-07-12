@@ -142,7 +142,7 @@ const SerpAPI = (() => {
    * @param {number} [max=6]
    * @returns {Array}         - Array of { title, link, snippet, thumbnail }
    */
-  function extractOrganicResults(data, max = 6) {
+  function extractOrganicResults(data, max = 4) {
     const results = data?.organic_results || [];
     return results.slice(0, max).map(r => ({
       title:     r.title     || '',
@@ -157,7 +157,7 @@ const SerpAPI = (() => {
    * @param {Object} data
    * @returns {Array}  - Array of { airline, price, duration, stops, departure, arrival }
    */
-  function extractFlights(data, max = 6) {
+  function extractFlights(data, max = 4) {
     const flights = data?.best_flights || data?.other_flights || [];
     return flights.slice(0, max).map(f => {
       const seg = (f.flights || [])[0] || {};
@@ -181,7 +181,7 @@ const SerpAPI = (() => {
    * @param {Object} data
    * @returns {Array}
    */
-  function extractHotels(data, max = 6) {
+  function extractHotels(data, max = 4) {
     const hotels = data?.properties || [];
     return hotels.slice(0, max).map(h => ({
       name:       h.name       || '',
@@ -206,6 +206,8 @@ const SerpAPI = (() => {
   };
 })();
 
+window.SerpAPI = SerpAPI;
+
 // ── CONTROLLER: ties SerpAPI + PexelsAPI to the DOM ─────────────────────────
 
 const TravelSearch = (() => {
@@ -214,6 +216,20 @@ const TravelSearch = (() => {
 
   // DOM refs (populated on init)
   let searchInput, searchBtn, tabBtns, resultsContainer, loadingEl, errorEl;
+
+  // Default fallback image used whenever a remote thumbnail fails to load
+  const FALLBACK_IMG = 'assets/img/tour/default.jpg';
+
+  /**
+   * Attach a robust onerror fallback + no-referrer policy to any <img> tag markup.
+   * Google/SerpAPI-hosted thumbnails frequently fail to load without
+   * referrerpolicy="no-referrer" (hotlink protection), and can also 404/expire —
+   * so every image gets both a referrer fix and a graceful fallback.
+   */
+  function imgAttrs(url, fallback = FALLBACK_IMG) {
+    const safeUrl = url || fallback;
+    return `src="${safeUrl}" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='${fallback}';"`;
+  }
 
   // ── RENDER FUNCTIONS ───────────────────────────────────────────────────────
 
@@ -239,7 +255,7 @@ const TravelSearch = (() => {
     let images = [];
     try {
       if (window.PexelsAPI) {
-        images = await window.PexelsAPI.getTravelImages(pexelsQuery, results.length || 6);
+        images = await window.PexelsAPI.getTravelImages(pexelsQuery, results.length || 4);
       }
     } catch (_) { /* images optional */ }
 
@@ -248,14 +264,14 @@ const TravelSearch = (() => {
       return;
     }
 
-    const cards = results.map((r, i) => {
+    const cards = results.slice(0, 4).map((r, i) => {
       const img    = images[i];
-      const imgUrl = img ? img.url : 'assets/img/tour/default.jpg';
+      const imgUrl = img ? img.url : FALLBACK_IMG;
       const imgAlt = img ? img.alt : r.title;
       return `
         <div class="ts-card wow fadeInUp" data-wow-duration=".9s" data-wow-delay="${0.1 + i * 0.1}s">
           <div class="ts-card-thumb">
-            <img src="${imgUrl}" alt="${imgAlt}" loading="lazy">
+            <img ${imgAttrs(imgUrl)} alt="${imgAlt}" loading="lazy">
           </div>
           <div class="ts-card-body">
             <h3 class="ts-card-title"><a href="${r.link}" target="_blank" rel="noopener">${r.title}</a></h3>
@@ -280,11 +296,11 @@ const TravelSearch = (() => {
       return;
     }
 
-    const cards = flights.map((f, i) => {
+    const cards = flights.slice(0, 4).map((f, i) => {
       const durationH = Math.floor(f.duration / 60);
       const durationM = f.duration % 60;
       const stopLabel = f.stops === 0 ? 'Nonstop' : `${f.stops} stop${f.stops > 1 ? 's' : ''}`;
-      const logoHtml  = f.logo ? `<img src="${f.logo}" alt="${f.airline}" class="ts-flight-logo">` : `<span class="ts-flight-airline">${f.airline}</span>`;
+      const logoHtml  = f.logo ? `<img ${imgAttrs(f.logo, '')} alt="${f.airline}" class="ts-flight-logo" onerror="this.style.display='none';">` : `<span class="ts-flight-airline">${f.airline}</span>`;
       return `
         <div class="ts-flight-card wow fadeInUp" data-wow-duration=".9s" data-wow-delay="${0.1 + i * 0.1}s">
           <div class="ts-flight-header">
@@ -323,7 +339,7 @@ const TravelSearch = (() => {
     let images = [];
     try {
       if (window.PexelsAPI) {
-        images = await window.PexelsAPI.getTravelImages(pexelsQuery + ' hotel', hotels.length || 6);
+        images = await window.PexelsAPI.getTravelImages(pexelsQuery + ' hotel', hotels.length || 4);
       }
     } catch (_) {}
 
@@ -332,9 +348,9 @@ const TravelSearch = (() => {
       return;
     }
 
-    const cards = hotels.map((h, i) => {
+    const cards = hotels.slice(0, 4).map((h, i) => {
       const img     = images[i];
-      const imgUrl  = h.thumbnail || (img ? img.url : 'assets/img/tour/default.jpg');
+      const imgUrl  = h.thumbnail || (img ? img.url : FALLBACK_IMG);
       const stars   = Math.round(h.rating);
       const starHtml = Array.from({ length: 5 }, (_, si) =>
         `<i class="fa${si < stars ? 's' : 'r'} fa-star"></i>`
@@ -342,7 +358,7 @@ const TravelSearch = (() => {
       return `
         <div class="ts-card wow fadeInUp" data-wow-duration=".9s" data-wow-delay="${0.1 + i * 0.1}s">
           <div class="ts-card-thumb">
-            <img src="${imgUrl}" alt="${h.name}" loading="lazy">
+            <img ${imgAttrs(imgUrl)} alt="${h.name}" loading="lazy">
             <span class="ts-card-badge">${h.price !== 'N/A' ? '$' + h.price + '/night' : 'See price'}</span>
           </div>
           <div class="ts-card-body">
@@ -375,7 +391,7 @@ const TravelSearch = (() => {
         // ── HOME ──────────────────────────────────────────────────────────────
         case 'home': {
           const data    = await SerpAPI.searchHome(query);
-          const results = SerpAPI.extractOrganicResults(data);
+          const results = SerpAPI.extractOrganicResults(data, 4);
           await renderOrganicGrid(results, query + ' travel destination');
           break;
         }
@@ -396,7 +412,7 @@ const TravelSearch = (() => {
             outbound_date: depDate,
             return_date:   retDate
           });
-          const flights = SerpAPI.extractFlights(data);
+          const flights = SerpAPI.extractFlights(data, 4);
           await renderFlights(flights);
           break;
         }
@@ -404,7 +420,7 @@ const TravelSearch = (() => {
         // ── INTERNATIONAL ─────────────────────────────────────────────────────
         case 'international': {
           const data    = await SerpAPI.searchInternational(query);
-          const results = SerpAPI.extractOrganicResults(data);
+          const results = SerpAPI.extractOrganicResults(data, 4);
           await renderOrganicGrid(results, query + ' international travel');
           break;
         }
@@ -419,7 +435,7 @@ const TravelSearch = (() => {
           let hotels = [];
           try {
             const data = await SerpAPI.searchHotels({ q: query, check_in: checkIn, check_out: checkOut });
-            hotels = SerpAPI.extractHotels(data);
+            hotels = SerpAPI.extractHotels(data, 4);
           } catch (_) {}
 
           if (hotels.length) {
@@ -427,7 +443,7 @@ const TravelSearch = (() => {
           } else {
             // Fallback to organic vacation search
             const data    = await SerpAPI.searchVacations(query);
-            const results = SerpAPI.extractOrganicResults(data);
+            const results = SerpAPI.extractOrganicResults(data, 4);
             await renderOrganicGrid(results, query + ' vacation package');
           }
           break;
@@ -505,342 +521,3 @@ const TravelSearch = (() => {
 })();
 
 window.TravelSearch = TravelSearch;
-
-// ── POPULAR HOTELS SYSTEM (SWIPER-TABBED) ─────────────────────────────────────
-const PopularPackages = (() => {
-  const INTL_LOCATIONS = [
-    { id: 'london', name: 'London', query: 'London, UK', pexelsQuery: 'London hotel luxury', isIndia: false },
-    { id: 'bangkok', name: 'Bangkok', query: 'Bangkok, Thailand', pexelsQuery: 'Bangkok hotel luxury', isIndia: false },
-    { id: 'dubai', name: 'Dubai', query: 'Dubai, UAE', pexelsQuery: 'Dubai hotel resort luxury', isIndia: false },
-    { id: 'paris', name: 'Paris', query: 'Paris, France', pexelsQuery: 'Paris hotel luxury', isIndia: false },
-    { id: 'tokyo', name: 'Tokyo', query: 'Tokyo, Japan', pexelsQuery: 'Tokyo hotel luxury', isIndia: false },
-    { id: 'singapore', name: 'Singapore', query: 'Singapore', pexelsQuery: 'Singapore hotel luxury resort', isIndia: false }
-  ];
-
-  const INDIA_LOCATIONS = [
-    { id: 'agra', name: 'Agra', query: 'Agra, India', pexelsQuery: 'Agra Taj Mahal hotel', isIndia: true },
-    { id: 'jaipur', name: 'Jaipur', query: 'Jaipur, India', pexelsQuery: 'Jaipur heritage hotel palace', isIndia: true },
-    { id: 'kerala', name: 'Kerala', query: 'Kerala, India', pexelsQuery: 'Kerala resort houseboat', isIndia: true },
-    { id: 'goa', name: 'Goa', query: 'Goa, India', pexelsQuery: 'Goa beach hotel resort', isIndia: true },
-    { id: 'varanasi', name: 'Varanasi', query: 'Varanasi, India', pexelsQuery: 'Varanasi hotel Ganges', isIndia: true },
-    { id: 'ladakh', name: 'Ladakh', query: 'Ladakh, India', pexelsQuery: 'Ladakh hotel mountain', isIndia: true }
-  ];
-
-  const HOTEL_NAMES = [
-    "Grand Plaza Hotel", "The Ritz Carlton", "Hilton Riverside", 
-    "Sheraton Grand Resort", "Four Seasons Oasis", "InterContinental Palace",
-    "St. Regis Luxury Suite", "Hyatt Regency Tower", "Marriott Executive Stay",
-    "Shangri-La Royal Sanctuary"
-  ];
-
-  async function fetchCachedHotels(location) {
-    const cacheKey = `serp_hotels_${location.id}`;
-    const cached = localStorage.getItem(cacheKey);
-    if (cached) {
-      try {
-        const parsed = JSON.parse(cached);
-        if (Array.isArray(parsed) && parsed.length > 0 && parsed.every(item => item && typeof item.price === 'number' && !isNaN(item.price) && typeof item.oldPrice === 'number' && !isNaN(item.oldPrice))) {
-          return parsed;
-        }
-        localStorage.removeItem(cacheKey); // Discard invalid/stale legacy cache
-      } catch (e) {
-        console.error("Cache parsing error:", e);
-      }
-    }
-
-    try {
-      const today = new Date();
-      today.setDate(today.getDate() + 7);
-      const checkIn = today.toISOString().split('T')[0];
-      const checkOut = new Date(today.setDate(today.getDate() + 5)).toISOString().split('T')[0];
-
-      const data = await SerpAPI.searchHotels({
-        q: location.query,
-        check_in: checkIn,
-        check_out: checkOut
-      });
-      
-      const properties = data?.properties || [];
-      if (properties && properties.length > 0) {
-        const list = properties.slice(0, 10).map((h, i) => {
-          const name = h.name || `${location.name} ${HOTEL_NAMES[i % HOTEL_NAMES.length]}`;
-          let rawPrice = h.rate_per_night?.lowest;
-          let price = 120 + (i * 15);
-          let isRawINR = false;
-
-          if (rawPrice) {
-            const rawStr = rawPrice.toString();
-            if (rawStr.includes('₹') || rawStr.includes('Rs') || rawStr.includes('INR')) {
-              isRawINR = true;
-            }
-            const parsedNum = parseFloat(rawStr.replace(/[^0-9.]/g, ''));
-            if (!isNaN(parsedNum)) {
-              price = parsedNum;
-            }
-          }
-
-          // Convert to INR if the raw input was in USD (or is a low value)
-          let priceInINR = price;
-          if (!isRawINR) {
-            if (price < 2000) {
-              priceInINR = price * 83; // 83 INR per USD
-            }
-          }
-
-          const rating = h.overall_rating || 4.5;
-          const reviews = h.reviews || 88;
-          
-          // discount percentage between 15% and 40%
-          const discountPercent = Math.floor(Math.random() * (40 - 15 + 1)) + 15;
-          const oldPriceInINR = Math.round(priceInINR * (1 + discountPercent / 100));
-          
-          return {
-            title: name,
-            location: location.name,
-            rating: parseFloat(rating),
-            reviews: reviews,
-            duration: "3 days",
-            groupSize: "2-6",
-            price: Math.round(priceInINR),
-            oldPrice: Math.round(oldPriceInINR),
-            discount: discountPercent,
-            video: 'https://www.youtube.com/watch?v=tffjAlDbBGU',
-            map: h.gps_coordinates ? `https://www.google.com/maps/search/?api=1&query=${h.gps_coordinates.latitude},${h.gps_coordinates.longitude}` : `https://maps.google.com/?q=${encodeURIComponent(name)}`,
-            link: h.link || 'tour-details-2.html',
-            thumbnail: h.images?.[0]?.thumbnail || ''
-          };
-        });
-        localStorage.setItem(cacheKey, JSON.stringify(list));
-        return list;
-      }
-    } catch (err) {
-      console.warn(`SerpAPI fetch failed for hotels in ${location.name}, generating fallback data.`, err);
-    }
-
-    // Generate fallback data if SerpAPI fails
-    const hashBase = location.name.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
-    const list = Array.from({ length: 10 }, (_, i) => {
-      const hotelName = `${location.name} ${HOTEL_NAMES[i % HOTEL_NAMES.length]}`;
-      const priceUSD = 110 + (hashBase % 150) + i * 25;
-      const priceInINR = priceUSD * 83;
-      
-      const discountPercent = Math.floor(Math.random() * (40 - 15 + 1)) + 15;
-      const oldPriceInINR = Math.round(priceInINR * (1 + discountPercent / 100));
-
-      return {
-        title: hotelName,
-        location: location.name,
-        rating: parseFloat((4.4 + (i % 7) * 0.1).toFixed(1)),
-        reviews: 50 + (hashBase % 200) + i * 12,
-        duration: `${(i % 3) + 2} days`,
-        groupSize: `2-${(i % 4) + 4}`,
-        price: Math.round(priceInINR),
-        oldPrice: Math.round(oldPriceInINR),
-        discount: discountPercent,
-        video: 'https://www.youtube.com/watch?v=tffjAlDbBGU',
-        map: `https://maps.google.com/?q=${encodeURIComponent(hotelName)}`,
-        link: 'tour-details-2.html',
-        thumbnail: ''
-      };
-    });
-    localStorage.setItem(cacheKey, JSON.stringify(list));
-    return list;
-  }
-
-  function renderCardMarkup(data, imageUrl) {
-    const starHtml = Array.from({ length: 5 }, (_, i) => {
-      const active = i < Math.round(data.rating || 4.5);
-      return `<span><i class="fa-solid fa-star" style="color: ${active ? '#FFC418' : '#e0e0e0'}"></i></span>`;
-    }).join('');
-
-    const priceVal = (data.price !== null && data.price !== undefined && !isNaN(data.price)) ? Number(data.price) : 0;
-    const oldPriceVal = (data.oldPrice !== null && data.oldPrice !== undefined && !isNaN(data.oldPrice)) ? Number(data.oldPrice) : Math.round(priceVal * 1.3);
-    const discountVal = (data.discount !== null && data.discount !== undefined && !isNaN(data.discount)) ? Number(data.discount) : 25;
-    const reviewsVal = (data.reviews !== null && data.reviews !== undefined && !isNaN(data.reviews)) ? Number(data.reviews) : 0;
-    const groupSizeStr = typeof data.groupSize === 'string' && data.groupSize.includes('-') ? data.groupSize : '2-6';
-
-    return `
-      <div class="swiper-slide">
-         <div class="tp-tour-item mb-30" style="margin: 0 10px;">
-            <div class="tp-tour-thumb p-relative fix">
-               <a href="${data.link || '#'}" class="image">
-                  <img src="${imageUrl}" alt="${data.title || ''}" style="height: 250px; object-fit: cover; width: 100%;">
-               </a>
-               <span class="tp-tour-wishlist">
-                  <i class="fa-regular fa-heart"></i>
-               </span>
-               <div class="tp-tour-badge">
-                  <span class="discount tp-ff-inter fw-700">- ${discountVal}% Off</span>
-               </div>
-               <div class="tp-tour-media-meta">
-                  <a class="popup-image" href="${imageUrl}">
-                     <i class="fa-regular fa-image"></i>
-                  </a>
-                  <a class="popup-video" href="${data.video || 'https://www.youtube.com/watch?v=tffjAlDbBGU'}">
-                     <i class="fa-regular fa-square-play"></i>
-                  </a>
-                  <a href="${data.map || '#'}" target="_blank">
-                     <i class="fa-regular fa-map"></i>
-                  </a>
-               </div>
-            </div>
-            <div class="tp-tour-content">
-               <div class="tp-tour-meta d-flex align-items-center">
-                  <div class="tp-tour-review mr-5">
-                     ${starHtml}
-                  </div>
-                  <span class="tp-tour-review-score tp-ff-inter">(${reviewsVal.toString().padStart(2, '0')} Reviews)</span>
-               </div>
-               <h3 class="tp-tour-title fw-500 mb-10"><a href="${data.link || '#'}">${data.title || ''}</a></h3>
-               <div class="tp-tour-info">
-                  <span>
-                     <i class="fa-solid fa-location-dot"></i>
-                     ${data.location || ''}
-                  </span>
-                  <span>
-                     <i class="fa-regular fa-clock"></i>
-                     ${data.duration || '3 days'}
-                  </span>
-                  <span>
-                     <i class="fa-solid fa-users"></i>
-                     <span>${groupSizeStr.split('-')[0]}</span>-<span>${groupSizeStr.split('-')[1]}</span> user
-                  </span>
-               </div>
-               <div class="tp-tour-footer d-flex justify-content-between gap-2 align-items-center">
-                  <div class="tp-tour-price">
-                     <div class="tp-tour-top-price">
-                        <span class="tp-tour-prefix">From:</span>
-                        <span class="tp-tour-old-price">₹${oldPriceVal.toLocaleString('en-IN')}</span>
-                     </div>
-                     <div class="tp-tour-bottom-price">
-                        <span class="tp-tour-new-price fw-700">₹${priceVal.toLocaleString('en-IN')}</span>
-                        <span class="tp-tour-suffix">/person</span>
-                     </div>
-                  </div>
-                  <div class="tp-tour-btn">
-                     <a href="${data.link || '#'}" class="tp-btn-sm fw-500 tp-ff-inter">Book A tour</a>
-                  </div>
-               </div>
-            </div>
-         </div>
-      </div>
-    `;
-  }
-
-  const swipers = {};
-
-  function initSwiper(locId) {
-    if (swipers[locId]) {
-      swipers[locId].update();
-      return;
-    }
-
-    swipers[locId] = new Swiper(`#${locId}-swiper`, {
-      slidesPerView: 1,
-      spaceBetween: 20,
-      loop: true,
-      observer: true,
-      observeParents: true,
-      navigation: {
-        prevEl: `.${locId}-prev`,
-        nextEl: `.${locId}-next`,
-      },
-      breakpoints: {
-        480:  { slidesPerView: 1, spaceBetween: 15 },
-        768:  { slidesPerView: 2, spaceBetween: 20 },
-        992:  { slidesPerView: 3, spaceBetween: 24 },
-        1200: { slidesPerView: 4, spaceBetween: 30 }
-      }
-    });
-  }
-
-  async function renderPackages() {
-    const ALL_LOCATIONS = [...INTL_LOCATIONS, ...INDIA_LOCATIONS];
-
-    // Render skeleton loaders for layout stability
-    ALL_LOCATIONS.forEach(loc => {
-      const grid = document.getElementById(`${loc.id}-grid`);
-      if (!grid) return;
-      grid.innerHTML = Array.from({ length: 4 }, (_, i) => `
-        <div class="swiper-slide loading-skeleton" style="animation-delay: ${i * 0.1}s">
-          <div class="tp-tour-item mb-30" style="margin: 0 10px; opacity: 0.6; filter: blur(2px);">
-            <div class="tp-tour-thumb p-relative fix" style="height: 250px; background: #e0e0e0;"></div>
-            <div class="tp-tour-content" style="background: #f5f5f5; height: 180px;"></div>
-          </div>
-        </div>
-      `).join('');
-    });
-
-    // Fetch images and hotel details for all locations in parallel
-    const hotelPromises = ALL_LOCATIONS.map(async (loc) => {
-      let pexelsImgs = [];
-      try {
-        if (window.PexelsAPI) {
-          pexelsImgs = await window.PexelsAPI.getTravelImages(loc.pexelsQuery, 10);
-        }
-      } catch (e) {
-        console.error("Pexels failed for " + loc.name, e);
-      }
-      
-      const hotelsData = await fetchCachedHotels(loc);
-      return { loc, hotelsData, pexelsImgs };
-    });
-
-    const results = await Promise.all(hotelPromises);
-
-    // Populate each grid
-    results.forEach(({ loc, hotelsData, pexelsImgs }) => {
-      const grid = document.getElementById(`${loc.id}-grid`);
-      if (!grid) return;
-
-      grid.innerHTML = hotelsData.map((hotel, i) => {
-        const fallbackUrl = 'assets/img/tour/01.jpg';
-        const imgUrl = hotel.thumbnail || pexelsImgs[i % pexelsImgs.length]?.url || fallbackUrl;
-        return renderCardMarkup(hotel, imgUrl);
-      }).join('');
-    });
-
-    // Initialize swiper for default active tabs (London for International, Agra for India)
-    initSwiper('london');
-    initSwiper('agra');
-
-    // Hook into Bootstrap tab events to initialize or update swipers dynamically on tab change
-    const tabEl = document.querySelectorAll('a[data-bs-toggle="tab"]');
-    tabEl.forEach(tab => {
-      tab.addEventListener('shown.bs.tab', (event) => {
-        const targetId = event.target.getAttribute('href').replace('#', '').replace('-tab', '');
-        initSwiper(targetId);
-      });
-    });
-
-    // Reinitialize Magnific Popup for dynamic items
-    if (window.jQuery && window.jQuery.fn.magnificPopup) {
-      window.jQuery('.popup-image').magnificPopup({
-        type: 'image',
-        gallery: { enabled: true }
-      });
-      window.jQuery('.popup-video').magnificPopup({
-        type: 'iframe'
-      });
-    }
-
-    // Reinitialize WOW.js animations
-    if (window.WOW) {
-      new WOW({ live: false }).init();
-    }
-  }
-
-  function init() {
-    renderPackages();
-  }
-
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', init);
-  } else {
-    init();
-  }
-
-  return { init, renderPackages };
-})();
-
-window.PopularPackages = PopularPackages;

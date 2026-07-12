@@ -99,122 +99,20 @@ async function renderDestinations() {
   // 4. Init Swiper once slides are in place (5 breakpoints max: xs/sm/md/lg/xl).
   new Swiper('#destination-swiper', {
     slidesPerView: 1,
-    spaceBetween: 20,
+    spaceBetween: 15,
     loop: true,
     pagination: { el: '.swiper-pagination', clickable: true },
-    navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' },
+    navigation: {
+      prevEl: '.destination-prev',
+      nextEl: '.destination-next',
+    },
     breakpoints: {
-      480:  { slidesPerView: 2, spaceBetween: 16 },
-      768:  { slidesPerView: 3, spaceBetween: 20 },
-      1024: { slidesPerView: 4, spaceBetween: 24 },
-      1280: { slidesPerView: 5, spaceBetween: 24 }
+      480:  { slidesPerView: 2, spaceBetween: 8 },
+      768:  { slidesPerView: 3, spaceBetween: 12 },
+      1024: { slidesPerView: 4, spaceBetween: 12 },
+      1280: { slidesPerView: 5, spaceBetween: 15 }
     }
   });
 }
  
 renderDestinations();
-// Relies on window.SerpAPI + window.PexelsAPI already loaded on the page.
-// Renders tour-card markup (same structure as tp-tour-item) into two grids.
-
-const INDIA_LOCATIONS = [
-  { name: 'Jaipur',    query: 'Jaipur India tour package' },
-  { name: 'Goa',       query: 'Goa India tour package' },
-  { name: 'Kerala',    query: 'Kerala backwaters tour package' },
-  { name: 'Manali',    query: 'Manali Himachal tour package' },
-  { name: 'Udaipur',   query: 'Udaipur India tour package' },
-  { name: 'Rishikesh', query: 'Rishikesh India tour package' },
-];
-
-const INTL_LOCATIONS = [
-  { name: 'Bangkok',    query: 'Bangkok Thailand tour package' },
-  { name: 'Dubai',      query: 'Dubai UAE tour package' },
-  { name: 'London',     query: 'London UK tour package' },
-  { name: 'Bali',       query: 'Bali Indonesia tour package' },
-  { name: 'Paris',      query: 'Paris France tour package' },
-  { name: 'Singapore',  query: 'Singapore tour package' },
-];
-
-const TOUR_FALLBACK_IMG = 'assets/img/tour/01.jpg';
-
-function tourCardMarkup(loc, item, imgUrl) {
-  const title   = item?.title || `${loc.name} tour package`;
-  const link    = item?.link  || '#';
-  const price   = item?.price || '299';
-  return `
-    <div class="col-xxl-3 col-xl-4 col-lg-6 col-md-6">
-      <div class="tp-tour-item mb-30">
-        <div class="tp-tour-thumb p-relative fix">
-          <a href="${link}" target="_blank" rel="noopener" class="image">
-            <img src="${imgUrl}" alt="${loc.name}">
-          </a>
-          <div class="tp-tour-badge">
-            <span class="discount tp-ff-inter fw-700">Featured</span>
-          </div>
-        </div>
-        <div class="tp-tour-content">
-          <h3 class="tp-tour-title fw-500 mb-10"><a href="${link}" target="_blank" rel="noopener">${title}</a></h3>
-          <div class="tp-tour-info">
-            <span>
-              <svg width="15" height="16" viewBox="0 0 15 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M9.49961 7.04985C9.49961 8.40295 8.40271 9.49985 7.04961 9.49985C5.69651 9.49985 4.59961 8.40295 4.59961 7.04985C4.59961 5.69675 5.69651 4.59985 7.04961 4.59985C8.40271 4.59985 9.49961 5.69675 9.49961 7.04985Z" stroke="currentColor" stroke-width="1.5"/>
-                <path d="M7.04951 0.75C10.4587 0.75 13.349 3.57287 13.349 6.99757C13.349 10.4768 10.4116 12.9183 7.69836 14.5786C7.50063 14.6903 7.27699 14.7489 7.04951 14.7489C6.82203 14.7489 6.5984 14.6903 6.40066 14.5786C3.6925 12.9022 0.75 10.4888 0.75 6.99757C0.75 3.57287 3.64038 0.75 7.04951 0.75Z" stroke="currentColor" stroke-width="1.5"/>
-              </svg>
-              ${loc.name}
-            </span>
-          </div>
-          <div class="tp-tour-footer d-flex justify-content-between gap-2 align-items-center">
-            <div class="tp-tour-price">
-              <div class="tp-tour-bottom-price">
-                <span class="tp-tour-new-price fw-700">$${price}</span>
-                <span class="tp-tour-suffix">/person</span>
-              </div>
-            </div>
-            <div class="tp-tour-btn">
-              <a href="${link}" target="_blank" rel="noopener" class="tp-btn-sm fw-500 tp-ff-inter">Book A tour</a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>`;
-}
-
-async function renderTourSection(locations, gridId) {
-  const grid = document.getElementById(gridId);
-  if (!grid) return;
-
-  // paint fallback cards immediately
-  grid.innerHTML = locations.map(loc =>
-    tourCardMarkup(loc, null, TOUR_FALLBACK_IMG).replace(
-      '<div class="col-xxl-3',
-      `<div data-slot="${loc.name}" class="col-xxl-3`
-    )
-  ).join('');
-
-  await Promise.all(locations.map(async (loc) => {
-    let item = null;
-    let imgUrl = TOUR_FALLBACK_IMG;
-
-    try {
-      const data = await window.SerpAPI.searchHome(loc.query);
-      const results = window.SerpAPI.extractOrganicResults(data, 1);
-      item = results[0] || null;
-    } catch (err) {
-      console.error('SerpAPI error for', loc.name, err);
-    }
-
-    try {
-      if (window.PexelsAPI) {
-        const imgs = await window.PexelsAPI.getTravelImages(loc.query, 1);
-        if (imgs[0]) imgUrl = imgs[0].url;
-      }
-    } catch (err) {
-      console.error('Pexels error for', loc.name, err);
-    }
-
-    const slot = grid.querySelector(`[data-slot="${CSS.escape(loc.name)}"]`);
-    if (slot) slot.outerHTML = tourCardMarkup(loc, item, imgUrl);
-  }));
-}
-
-renderTourSection(INDIA_LOCATIONS, 'india-tour-grid');
-renderTourSection(INTL_LOCATIONS, 'intl-tour-grid');
